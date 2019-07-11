@@ -20,14 +20,11 @@ class SunriseSunset extends React.Component
 		let weatherData = this.state.weatherData;
 		if (navigator.geolocation)
 		{
-			console.log("asd")
 			navigator.geolocation.getCurrentPosition((position) => {
-				console.log("asd 1")
 				let latitude = position.coords.latitude;
 				let longitude = position.coords.longitude;
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 				.then((response) => {
-					console.log("asd 3")
 					console.log(response.data)	
 						let placename = response.data.location.name;
 						const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
@@ -105,7 +102,6 @@ class SunriseSunset extends React.Component
 		tomorrowMidNight.setHours(24,0,0,0);
 		let tomorrowMidNightStamp = tomorrowMidNight.getTime();
 
-
 		myweather[1] = { prevDateStamp: prevDateStamp, startStamp: startStamp, endStamp: endStamp, tstartStamp: tstartStamp, tendStamp: tendStamp, tomorrowMidNightStamp: tomorrowMidNightStamp, todayMidNightStamp: todayMidNightStamp };
 		this.setState({ weatherData: myweather });
 	}
@@ -163,7 +159,9 @@ class SunriseSunset extends React.Component
 			let nextSunrisePahar = this.convertToPaharDay(nextSunrisePaharDiff);
 			if ( weatherData[2] ) {
 				const prevData = weatherData[2];
+				console.log("executed", prevData.sunrisePahar, sunrisePahar);
 				if (prevData.sunrisePahar !== sunrisePahar) {
+					console.log("executed 2")
 					weatherData[2] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunrisePahar: nextSunrisePahar };
 					this.setState({ weatherData: weatherData });
 				} 
@@ -201,7 +199,6 @@ class SunriseSunset extends React.Component
 			axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
 			.then((response) => {
 				console.log(response.data)
-				let prevSunrise = response.data.forecast.forecastday[0].astro.sunrise; 
 				let prevSunset = response.data.forecast.forecastday[0].astro.sunset;
 
 				let hr = parseInt(prevSunset.split(':')[0]) + 12;
@@ -244,11 +241,12 @@ class SunriseSunset extends React.Component
 	  setTimeout(this.startTime, 500);
 	  setTimeout(this.setState({ time: realTime }), 500);
 	}
-	componentDidUpdate() {
-		try {
-			this.sunriseSunsetInPahar();
-		} catch(e) {
-
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.time !== this.state.time) {
+			try {
+				this.convertTimeStamp();
+				this.sunriseSunsetInPaharDay();
+			} catch (e) {}
 		}
 	}
 	render()
@@ -268,7 +266,9 @@ class SunriseSunset extends React.Component
 					</div>
 				)
 			}
-			else if ( weatherData[3] && (weatherData[0].currentTimeStamp > weatherData[1].endStamp && weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp) || (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp && weatherData[0].currentTimeStamp < weatherData[1].startStamp) )
+			else if ( weatherData[3]
+				&& (((weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp))
+				|| ((weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
 			{
 				console.log('else running')
 				return (
