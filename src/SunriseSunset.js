@@ -48,7 +48,6 @@ class SunriseSunset extends React.Component
 	}
 	convertTimeStamp()
 	{
-		console.log('timestamp running')
 		let myweather = this.state.weatherData;
 		const { weatherData } = this.state;
 		let time1 = weatherData[0].sunrise;
@@ -62,17 +61,12 @@ class SunriseSunset extends React.Component
 		prevDate.setDate(getPrevDate.split('-')[2] - 1);
 		let prevDateStamp = prevDate.getTime() / 1000;
 
-		console.log(prevDate, prevDateStamp)
-
 		let time2 = weatherData[0].sunset;
 		let hr = parseInt(time2.split(':')[0]) + 12;
-		console.log(hr)
 		let endDate = new Date();
 		endDate.setHours(hr);
 		endDate.setMinutes(time2.split(' ')[0].split(':')[1]);
 		let endStamp = endDate.getTime();
-		console.log(startStamp, endDate);
-
 		let tomorrowtime1 = weatherData[0].tomorrowSunriseTime;
 		let tomorrowDate = weatherData[0].tomorrowDate;
 		let tstartDate = new Date();
@@ -84,7 +78,6 @@ class SunriseSunset extends React.Component
 
 		let tomorrowtime2 = weatherData[0].tomorrowSunsetTime;
 		let changeFormat = parseInt(tomorrowtime2.split(':')[0]) + 12;
-		console.log(hr)
 		let tendDate = new Date();
 		tendDate.setHours(changeFormat);
 		tendDate.setMinutes(tomorrowtime2.split(' ')[0].split(':')[1]);
@@ -160,9 +153,7 @@ class SunriseSunset extends React.Component
 			let nextSunrisePahar = this.convertToPaharDay(nextSunrisePaharDiff);
 			if ( weatherData[2] ) {
 				const prevData = weatherData[2];
-				console.log("executed", prevData.sunrisePahar, sunrisePahar);
 				if (prevData.sunrisePahar !== sunrisePahar) {
-					console.log("executed 2")
 					weatherData[2] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunrisePahar: nextSunrisePahar };
 					this.setState({ weatherData: weatherData });
 				} 
@@ -239,8 +230,9 @@ class SunriseSunset extends React.Component
 	  let m = (currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes();
 	  let s = (currentTime.getSeconds() < 10 ? '0' : '') + currentTime.getSeconds();
 		let realTime = h + ":" + m + ":" + s;
-	  setTimeout(this.startTime, 500);
-	  setTimeout(this.setState({ time: realTime }), 500);
+	  setTimeout(this.startTime, 1000);
+	  setTimeout(this.setState({ time: realTime }), 1000);
+	  console.log( this.state.time)
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.time !== this.state.time) {
@@ -253,9 +245,9 @@ class SunriseSunset extends React.Component
 	render()
 	{
 		const { weatherData,time } = this.state;
-		if ( weatherData[0] && weatherData[1] && weatherData[2] )
+		if ( weatherData[0] && weatherData[1] )
 		{
-			if ( weatherData[0].currentTimeStamp > weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp)
+			if ( weatherData[2] && (weatherData[0].currentTimeStamp > weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp))
 			{
 				return (
 					<div>
@@ -271,7 +263,6 @@ class SunriseSunset extends React.Component
 				&& (((weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp))
 				|| ((weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
 			{
-				console.log('else running')
 				return (
 					<div>
 						<span> Today's Date : { weatherData[0].todayDate } </span> &nbsp; &nbsp; <span> Current Time: { weatherData[3].sunsetPahar } ({ time }) </span>
