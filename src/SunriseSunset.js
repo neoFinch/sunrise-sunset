@@ -11,7 +11,6 @@ class SunriseSunset extends React.Component
 		this.convertToPaharDay = this.convertToPaharDay.bind(this);
 		this.convertToPaharNight = this.convertToPaharNight.bind(this);
 		this.sunriseSunsetInPaharDay = this.sunriseSunsetInPaharDay.bind(this);
-		//this.sunriseSunsetInPaharNight = this.sunriseSunsetInPaharNight.bind(this);
 		this.convertTimeStamp = this.convertTimeStamp.bind(this);
 	}
 	componentDidMount()
@@ -33,8 +32,7 @@ class SunriseSunset extends React.Component
 						const tomorrowDate = response.data.forecast.forecastday[1].date;
 						const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
 						const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
-						let currentTimeStamp = response.data.location.localtime_epoch * 1000;
-						weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: currentTimeStamp, tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
+						weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
 						this.setState({ weatherData: weatherData },() => {
 							this.convertTimeStamp();
 							this.sunriseSunsetInPaharDay(); });
@@ -103,6 +101,7 @@ class SunriseSunset extends React.Component
 		let tomorrowMidNightStamp = tomorrowMidNight.getTime();
 
 		myweather[1] = { prevDateStamp: prevDateStamp, startStamp: startStamp, endStamp: endStamp, tstartStamp: tstartStamp, tendStamp: tendStamp, tomorrowMidNightStamp: tomorrowMidNightStamp, todayMidNightStamp: todayMidNightStamp };
+		myweather[0].currentTimeStamp = (new Date()).getTime();
 		this.setState({ weatherData: myweather });
 	}
 	convertToPaharDay(timePahar)
@@ -112,6 +111,8 @@ class SunriseSunset extends React.Component
 		let onePahar = timeDiff / 4 / 60;
 		let oneGarhi = timeDiff / 4 / 60 / 8;
 		let onePal = timeDiff / 4 / 60 / 8 / 60;
+		// console.log('------------------------------------------------------------------------------------------------------------------------');
+		// console.log(onePahar, oneGarhi, onePal);
 		let convertToPahar = parseInt(( timePahar / 60 ) / onePahar);
 		let convertToGarhi = parseInt((( timePahar / 60 ) % onePahar ) / oneGarhi);
 		let convertToPal = parseInt(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
