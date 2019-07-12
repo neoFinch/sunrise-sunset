@@ -56,7 +56,8 @@ class SunriseSunset extends React.Component
 
 		let prevDate = new Date();
 		let getPrevDate = this.state.weatherData[0].todayDate;
-		prevDate.setDate(getPrevDate.split('-')[2] - 1	);
+		console.log(getPrevDate)
+		prevDate.setDate(getPrevDate.split('-')[2] );
 		let prevDateStamp = prevDate.getTime();
 
 		let time2 = weatherData[0].sunset;
@@ -190,16 +191,21 @@ class SunriseSunset extends React.Component
 			let longitude = weatherData[0].longitude;
 			axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
 			.then((response) => {
+				console.log(response.data)
 				let prevSunset = response.data.forecast.forecastday[0].astro.sunset;
+				let preDate = response.data.forecast.forecastday[0].date;
+				console.log(preDate)
 				let hr = parseInt(prevSunset.split(':')[0]) + 12;
 				let prevDate = new Date();
+				prevDate.setDate(preDate.split('-')[2]);
 				prevDate.setHours(hr);
 				prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
 				prevDate.setSeconds(0);
+				console.log(prevDate)
 				let prevStamp = prevDate.getTime();
 				weatherData[4] = { prevStamp: prevStamp };
 				this.setState({ weatherData: weatherData },() => {
-
+					console.log(weatherData[1].startStamp)
 					let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
 					let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
 					let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
