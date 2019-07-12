@@ -15,7 +15,6 @@ class SunriseSunset extends React.Component
 	}
 	componentDidMount()
 	{
-		console.log('component running')
 		let weatherData = this.state.weatherData;
 		if (navigator.geolocation)
 		{
@@ -24,7 +23,6 @@ class SunriseSunset extends React.Component
 				let longitude = position.coords.longitude;
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 				.then((response) => {
-					console.log(response.data)	
 						let placename = response.data.location.name;
 						const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 						const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
@@ -42,7 +40,6 @@ class SunriseSunset extends React.Component
 		}
 		else
 		{
-			console.log('Geolocation not supported');
 		}
 		this.startTime();
 	}
@@ -54,18 +51,21 @@ class SunriseSunset extends React.Component
 		let startDate = new Date();
 		startDate.setHours(time1.split(":")[0]);
 		startDate.setMinutes(time1.split(" ")[0].split(':')[1]);
+		startDate.setSeconds(0);
 		let startStamp = startDate.getTime();
 
 		let prevDate = new Date();
 		let getPrevDate = this.state.weatherData[0].todayDate;
-		prevDate.setDate(getPrevDate.split('-')[2] - 1);
-		let prevDateStamp = prevDate.getTime() / 1000;
+		prevDate.setDate(getPrevDate.split('-')[2] - 1	);
+		let prevDateStamp = prevDate.getTime();
 
 		let time2 = weatherData[0].sunset;
 		let hr = parseInt(time2.split(':')[0]) + 12;
 		let endDate = new Date();
 		endDate.setHours(hr);
 		endDate.setMinutes(time2.split(' ')[0].split(':')[1]);
+		endDate.setSeconds(0);
+		// endDate.setSeconds(0);
 		let endStamp = endDate.getTime();
 		let tomorrowtime1 = weatherData[0].tomorrowSunriseTime;
 		let tomorrowDate = weatherData[0].tomorrowDate;
@@ -74,6 +74,7 @@ class SunriseSunset extends React.Component
 		tstartDate.setMinutes(tomorrowtime1.split(" ")[0].split(':')[1]);
 		tstartDate.setDate(tomorrowDate.split('-')[2]);
 		tstartDate.setMonth(tomorrowDate.split('-')[1] - 1);
+		tstartDate.setSeconds(0);
 		let tstartStamp = tstartDate.getTime();
 
 		let tomorrowtime2 = weatherData[0].tomorrowSunsetTime;
@@ -83,6 +84,7 @@ class SunriseSunset extends React.Component
 		tendDate.setMinutes(tomorrowtime2.split(' ')[0].split(':')[1]);
 		tendDate.setDate(tomorrowDate.split('-')[2]);
 		tendDate.setMonth(tomorrowDate.split('-')[1] - 1);
+		tendDate.setSeconds(0);
 		let tendStamp = tendDate.getTime();
 
 		let todayMidNight = new Date();
@@ -102,41 +104,45 @@ class SunriseSunset extends React.Component
 		let timeDiff = (this.state.weatherData[1].endStamp - this.state.weatherData[1].startStamp) / 1000;
 
 		let onePahar = timeDiff / 4 / 60;
-		let oneGarhi = timeDiff / 4 / 60 / 8;
-		let onePal = timeDiff / 4 / 60 / 8 / 60;
-		// console.log('------------------------------------------------------------------------------------------------------------------------');
-		// console.log(onePahar, oneGarhi, onePal);
-		let convertToPahar = parseInt(( timePahar / 60 ) / onePahar);
-		let convertToGarhi = parseInt((( timePahar / 60 ) % onePahar ) / oneGarhi);
-		let convertToPal = parseInt(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
-		let paharTime = convertToPahar + ' Pahar ' + convertToGarhi + ' Garhi ' + convertToPal + ' Pal ';
+		let oneGarhi = onePahar / 8;
+		let onePal = oneGarhi / 60;
+		let oneLamha = onePal / 60;
+		let convertToPahar = Math.floor(( timePahar / 60 ) / onePahar);
+		let convertToGarhi = Math.floor((( timePahar / 60 ) % onePahar ) / oneGarhi);
+		let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
+		let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
+		let paharTime = '\xa0\xa0' + convertToPahar + '\xa0\xa0\xa0' + ' | ' + '\xa0\xa0\xa0\xa0\xa0\xa0' + convertToGarhi + '\xa0\xa0\xa0\xa0\xa0' + ' | ' + '\xa0' + convertToPal + '\xa0' + ' | ' + '\xa0\xa0\xa0' + convertToLamha;
 		return paharTime;
 	}
 	convertToPaharNight(timePahar)
 	{
 		const { weatherData } = this.state;
-		if ( weatherData[0].currentTimeStamp > weatherData[1].endStamp && weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp)
+		if ( (weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp))
 		{
 			let timeDiff = (this.state.weatherData[1].tstartStamp - this.state.weatherData[1].endStamp) / 1000;
 			let onePahar = timeDiff / 4 / 60;
-			let oneGarhi = timeDiff / 4 / 60 / 8;
-			let onePal = timeDiff / 4 / 60 / 8 / 60;
-			let convertToPahar = parseInt(( timePahar / 60 ) / onePahar);
-			let convertToGarhi = parseInt((( timePahar / 60 ) % onePahar ) / oneGarhi);
-			let convertToPal = parseInt(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
-			let paharTime = convertToPahar + ' Pahar ' + convertToGarhi + ' Garhi ' + convertToPal + ' Pal ';
+			let oneGarhi = onePahar/ 8;
+			let onePal = oneGarhi / 60;
+			let oneLamha = onePal / 60;
+			let convertToPahar = Math.floor(( timePahar / 60 ) / onePahar);
+			let convertToGarhi = Math.floor((( timePahar / 60 ) % onePahar ) / oneGarhi);
+			let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
+			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
+			let paharTime = '\xa0\xa0' + convertToPahar + '\xa0\xa0\xa0' + ' | ' + '\xa0\xa0\xa0\xa0\xa0\xa0' + convertToGarhi + '\xa0\xa0\xa0\xa0\xa0' + ' | ' + '\xa0' + convertToPal + '\xa0' + ' | ' + '\xa0\xa0\xa0' + convertToLamha;
 			return paharTime;
 		}
-		else if ( weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp && weatherData[0].currentTimeStamp < weatherData[1].startStamp)
+		else if ( (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))
 		{
 			let timeDiff = (this.state.weatherData[1].startStamp - this.state.weatherData[4].prevStamp) / 1000;
 			let onePahar = timeDiff / 4 / 60;
-			let oneGarhi = timeDiff / 4 / 60 / 8;
-			let onePal = timeDiff / 4 / 60 / 8 / 60;
-			let convertToPahar = parseInt(( timePahar / 60 ) / onePahar);
-			let convertToGarhi = parseInt((( timePahar / 60 ) % onePahar ) / oneGarhi);
-			let convertToPal = parseInt(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
-			let paharTime = convertToPahar + ' Pahar ' + convertToGarhi + ' Garhi ' + convertToPal + ' Pal ';
+			let oneGarhi = onePahar / 8;
+			let onePal = oneGarhi / 60;
+			let oneLamha = onePal / 60;
+			let convertToPahar = Math.floor(( timePahar / 60 ) / onePahar);
+			let convertToGarhi = Math.floor((( timePahar / 60 ) % onePahar ) / oneGarhi);
+			let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
+			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
+			let paharTime = '\xa0\xa0' + convertToPahar + '\xa0\xa0\xa0' + ' | ' + '\xa0\xa0\xa0\xa0\xa0\xa0' + convertToGarhi + '\xa0\xa0\xa0\xa0\xa0' + ' | ' + '\xa0' + convertToPal + '\xa0' + ' | ' + '\xa0\xa0\xa0' + convertToLamha;
 			return paharTime;
 		}
 	}
@@ -152,11 +158,8 @@ class SunriseSunset extends React.Component
 			let sunsetPahar = this.convertToPaharDay(sunsetPaharDiff);
 			let nextSunrisePahar = this.convertToPaharDay(nextSunrisePaharDiff);
 			if ( weatherData[2] ) {
-				const prevData = weatherData[2];
-				if (prevData.sunrisePahar !== sunrisePahar) {
-					weatherData[2] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunrisePahar: nextSunrisePahar };
-					this.setState({ weatherData: weatherData });
-				} 
+				weatherData[2] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunrisePahar: nextSunrisePahar };
+				this.setState({ weatherData: weatherData });
 			} else {
 				weatherData[2] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunrisePahar: nextSunrisePahar };
 				this.setState({ weatherData: weatherData });
@@ -172,11 +175,8 @@ class SunriseSunset extends React.Component
 			let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
 			let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
 			if ( weatherData[3] ) {
-				const prevData = weatherData[3];
-				if (prevData.sunrisePahar !== sunrisePahar) {
-					weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
-					this.setState({ weatherData: weatherData });
-				} 
+				weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
+				this.setState({ weatherData: weatherData });
 			} else {
 				weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
 				this.setState({ weatherData: weatherData });
@@ -185,19 +185,17 @@ class SunriseSunset extends React.Component
 		else if ( weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp && weatherData[0].currentTimeStamp < weatherData[1].startStamp)
 		{
 			let weatherData = this.state.weatherData;
-			let unixdt = weatherData[1].prevDateStamp;
+			let unixdt = weatherData[1].prevDateStamp / 1000;
 			let latitude = weatherData[0].latitude;
 			let longitude = weatherData[0].longitude;
 			axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
 			.then((response) => {
-				console.log(response.data)
 				let prevSunset = response.data.forecast.forecastday[0].astro.sunset;
-
 				let hr = parseInt(prevSunset.split(':')[0]) + 12;
-				console.log(hr)
 				let prevDate = new Date();
 				prevDate.setHours(hr);
 				prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
+				prevDate.setSeconds(0);
 				let prevStamp = prevDate.getTime();
 				weatherData[4] = { prevStamp: prevStamp };
 				this.setState({ weatherData: weatherData },() => {
@@ -209,11 +207,8 @@ class SunriseSunset extends React.Component
 					let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
 					let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
 					if ( weatherData[3] ) {
-						const prevData = weatherData[3];
-						if (prevData.sunrisePahar !== sunrisePahar) {
-							weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
-							this.setState({ weatherData: weatherData });
-						} 
+						weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
+						this.setState({ weatherData: weatherData });
 					} else {
 						weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
 						this.setState({ weatherData: weatherData });
@@ -229,33 +224,42 @@ class SunriseSunset extends React.Component
 	  let h = (currentTime.getHours() < 10 ? '0' : '') + currentTime.getHours();
 	  let m = (currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes();
 	  let s = (currentTime.getSeconds() < 10 ? '0' : '') + currentTime.getSeconds();
-		let realTime = h + ":" + m + ":" + s;
-	  setTimeout(this.startTime, 1000);
-	  setTimeout(this.setState({ time: realTime }), 1000);
-	  console.log( this.state.time)
+	  let ms = (currentTime.getMilliseconds() < 10 ? '0' : '') + currentTime.getMilliseconds();
+		let realTime = h + ":" + m + ":" + s + ':' + ms;
+	  setTimeout(this.startTime, 300);
+	  setTimeout(this.setState({ time: realTime }), 400);
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.time !== this.state.time) {
 			try {
-				this.convertTimeStamp();
+				this.state.weatherData[0].currentTimeStamp = (new Date()).getTime();
 				this.sunriseSunsetInPaharDay();
 			} catch (e) {}
 		}
 	}
 	render()
 	{
-		const { weatherData,time } = this.state;
+		const { weatherData } = this.state;
+
 		if ( weatherData[0] && weatherData[1] )
 		{
 			if ( weatherData[2] && (weatherData[0].currentTimeStamp > weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp))
 			{
 				return (
-					<div>
-						<span> Today's Date : { weatherData[0].todayDate } </span> &nbsp; &nbsp; <span> Current Time: { weatherData[2].sunrisePahar } ({ time }) </span>
-						<p> Place : { weatherData[0].place } </p>
-						<p> Time since Sunrise happened :  { weatherData[2].sunrisePahar } </p>
-						<p> Sunset will happen in { weatherData[2].sunsetPahar }  </p>
-						<p> Time to next Sunrise : { weatherData[2].nextSunrisePahar } </p>
+					<div align = 'center'>
+						<center> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
+						<div className = 'Div1Align'>
+							<p></p><br/>
+							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Day Time : </i></font></p>
+							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
+							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to next Sunrise :</i> </font></p>
+						</div>
+						<div className = 'Div2Align'>
+							<p align = 'left'> <font size = '2' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
+							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
+							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
+							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].nextSunrisePahar } </font></p>
+						</div>
 					</div>
 				)
 			}
@@ -264,23 +268,31 @@ class SunriseSunset extends React.Component
 				|| ((weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
 			{
 				return (
-					<div>
-						<span> Today's Date : { weatherData[0].todayDate } </span> &nbsp; &nbsp; <span> Current Time: { weatherData[3].sunsetPahar } ({ time }) </span>
-						<p> Place : { weatherData[0].place } </p>
-						<p> Time since Sunset happened :  { weatherData[3].sunsetPahar } </p>
-						<p> Sunrise will happen in { weatherData[3].sunrisePahar }  </p>
-						<p> Time to next Sunset : { weatherData[3].nextSunsetPahar } </p>
+					<div align = 'center'>
+						<center className = 'firstDiv'> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
+						<div className = 'Div1Align'>
+							<p></p><br/>
+							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Night Time : </i></font></p>
+							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
+							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to next Sunset :</i> </font></p>
+						</div>
+						<div className = 'Div2Align'>
+							<p align = 'left'> <font size = '2' color = 'white' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
+							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
+							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
+							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].nextSunsetPahar } </font></p>
+						</div>
 					</div>
 				)
 			}
 			else
 			{
-				return <p> Oops... Error fetching data! </p>
+				return <center className = 'center'> <font color = 'white' face = 'verdana'>Oops... Error fetching data!</font></center>;
 			}
 		}
 		else
 		{
-			return <p> Wait Loading Data...</p>;
+			return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...</font></center>;
 		}
 	}
 }
