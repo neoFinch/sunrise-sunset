@@ -258,13 +258,11 @@ class SunriseSunset extends React.Component
 							<p></p><br/>
 							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Day Time : </i></font></p>
 							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
-							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to next Sunrise :</i> </font></p>
 						</div>
 						<div className = 'Div2Align'>
 							<p align = 'left'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
 							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
 							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
-							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].nextSunrisePahar } </font></p>
 						</div>
 					</div>
 				)
@@ -280,13 +278,11 @@ class SunriseSunset extends React.Component
 							<p></p><br/>
 							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Night Time : </i></font></p>
 							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
-							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to next Sunset :</i> </font></p>
 						</div>
 						<div className = 'Div2Align'>
 							<p align = 'left'> <font size = '2' color = 'white' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
 							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
 							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
-							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].nextSunsetPahar } </font></p>
 						</div>
 					</div>
 				)
