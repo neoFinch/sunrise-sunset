@@ -253,7 +253,7 @@ class SunriseSunset extends React.Component
 			{
 				return (
 					<div align = 'center'>
-						<center> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
+						<center className = 'firstDiv'> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
 						<div className = 'Div1Align'>
 							<p></p><br/>
 							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Day Time : </i></font></p>
@@ -261,7 +261,7 @@ class SunriseSunset extends React.Component
 							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to next Sunrise :</i> </font></p>
 						</div>
 						<div className = 'Div2Align'>
-							<p align = 'left'> <font size = '2' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
+							<p align = 'left'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
 							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
 							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
 							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].nextSunrisePahar } </font></p>
