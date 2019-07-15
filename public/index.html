@@ -17,24 +17,28 @@
 .center{
   margin-top: 25%
 }
+.time-wrapper {
+  display: flex;
+}
 body{
   background-color: black;
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 600px) {
   .Div-1{
-    float: left;
-    width: 39%;
-    margin-right: 1%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
   .Div-2 {
-    float: right;
-    width: 55%;
+    display: flex;
+    flex-direction: column;
+    flex: 2;
   }
   .firstDiv{
     margin-top: 35%;
   }
   .center {
-    margin-top: 25%
+    margin-top: 35%;
   }
 }
 

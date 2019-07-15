@@ -254,16 +254,18 @@ class SunriseSunset extends React.Component
 				return (
 					<div align = 'center'>
 						<center className = 'firstDiv'> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
-						<div className = 'Div-1'>
-							<p></p><br/>
-							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Day Time : </i></font></p>
-							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
-						</div>
-						<div className = 'Div-2'>
-							<p align = 'left'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
-							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
-							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
-						</div>
+						<center className = 'time-wrapper'>
+							<div className = 'Div-1'>
+								<p></p><br/>
+								<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Day Time : </i></font></p>
+								<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
+							</div>
+							<div className = 'Div-2'>
+								<p align = 'left'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
+								<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
+								<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
+							</div>
+						</center>
 					</div>
 				)
 			}
