@@ -23,6 +23,7 @@ class SunriseSunset extends React.Component
 				let longitude = position.coords.longitude;
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 				.then((response) => {
+					console.log(response.data)
 						let placename = response.data.location.name;
 						const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 						const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
@@ -261,7 +262,7 @@ class SunriseSunset extends React.Component
 								<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
 							</div>
 							<div className = 'Div-2'>
-								<p align = 'left'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
+								<p className = 'para'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
 								<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
 								<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
 							</div>
@@ -276,16 +277,18 @@ class SunriseSunset extends React.Component
 				return (
 					<div align = 'center'>
 						<center className = 'firstDiv'> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
-						<div className = 'Div-1'>
-							<p></p><br/>
-							<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Night Time : </i></font></p>
-							<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
-						</div>
-						<div className = 'Div-2'>
-							<p align = 'left'> <font size = '2' color = 'white' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
-							<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
-							<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
-						</div>
+						<center className = 'time-wrapper'>
+							<div className = 'Div-1'>
+								<p></p><br/>
+								<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Night Time : </i></font></p>
+								<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
+							</div>
+							<div className = 'Div-2'>
+								<p className = 'para'> <font size = '2' color = 'white' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
+								<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
+								<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
+							</div>
+						</center>
 					</div>
 				)
 			}
@@ -296,6 +299,7 @@ class SunriseSunset extends React.Component
 		}
 		else
 		{
+			console.log('else running')
 			return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...</font></center>;
 		}
 	}
