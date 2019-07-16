@@ -63,8 +63,7 @@ class SunriseSunset extends React.Component
 		let getPrevDate = this.state.weatherData[0].todayDate;
 		prevDate.setDate(getPrevDate.split('-')[2]);
 		let prevDateStamp = prevDate.getTime();
-		console.log(prevDate, prevDateStamp)
-		console.log(prevDate,prevDateStamp)
+
 		let time2 = weatherData[0].sunset;
 		let hr = parseInt(time2.split(':')[0]) + 12;
 		let endDate = new Date();
@@ -105,7 +104,6 @@ class SunriseSunset extends React.Component
 		elevenFiftyNine.setHours(11);
 		elevenFiftyNine.setMinutes(59);
 		elevenFiftyNine.setSeconds(0);
-		console.log(elevenFiftyNine)
 		let elevenFiftyNineStamp = elevenFiftyNine.getTime();
 
 		myweather[1] = { elevenFiftyNineStamp: elevenFiftyNineStamp, prevDateStamp: prevDateStamp, startStamp: startStamp, endStamp: endStamp, tstartStamp: tstartStamp, tendStamp: tendStamp, tomorrowMidNightStamp: tomorrowMidNightStamp, todayMidNightStamp: todayMidNightStamp };
@@ -225,7 +223,6 @@ class SunriseSunset extends React.Component
 		{
 			let weatherData = this.state.weatherData;
 			let unixdt = weatherData[1].prevDateStamp / 1000;
-			console.log(unixdt)
 			let latitude = weatherData[0].latitude;
 			let longitude = weatherData[0].longitude;
 			axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
@@ -380,12 +377,12 @@ class SunriseSunset extends React.Component
 			}
 			else
 			{
-				return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...!</font></center>;
+				return <center className = 'center'> <font face = 'verdana'>Loading Data, Please Wait...!</font></center>;
 			}
 		}
 		else
 		{
-			return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...!</font></center>;
+			return <center className = 'center'> <font face = 'verdana'>Loading Data, Please Wait...!</font></center>;
 		}
 	}
 }
