@@ -1,5 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import  './App.css';
+import  './hamburger.scss';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import About from './About';
 
 class SunriseSunset extends React.Component
 {
@@ -24,17 +28,17 @@ class SunriseSunset extends React.Component
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 				.then((response) => {
 					console.log(response.data)
-						let placename = response.data.location.name;
-						const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
-						const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
-						const todayDate = response.data.forecast.forecastday[0].date;
-						const tomorrowDate = response.data.forecast.forecastday[1].date;
-						const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
-						const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
-						weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
-						this.setState({ weatherData: weatherData },() => {
-							this.convertTimeStamp();
-							this.sunriseSunsetInPaharDay(); });
+					let placename = response.data.location.name;
+					const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
+					const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
+					const todayDate = response.data.forecast.forecastday[0].date;
+					const tomorrowDate = response.data.forecast.forecastday[1].date;
+					const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
+					const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
+					weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
+					this.setState({ weatherData: weatherData },() => {
+						this.convertTimeStamp();
+						this.sunriseSunsetInPaharDay(); });
 				})
 				.catch((error) => error);
 			})
@@ -57,10 +61,10 @@ class SunriseSunset extends React.Component
 
 		let prevDate = new Date();
 		let getPrevDate = this.state.weatherData[0].todayDate;
-		console.log(getPrevDate)
-		prevDate.setDate(getPrevDate.split('-')[2] );
+		prevDate.setDate(getPrevDate.split('-')[2]);
 		let prevDateStamp = prevDate.getTime();
-
+		console.log(prevDate, prevDateStamp)
+		console.log(prevDate,prevDateStamp)
 		let time2 = weatherData[0].sunset;
 		let hr = parseInt(time2.split(':')[0]) + 12;
 		let endDate = new Date();
@@ -97,7 +101,14 @@ class SunriseSunset extends React.Component
 		tomorrowMidNight.setHours(24,0,0,0);
 		let tomorrowMidNightStamp = tomorrowMidNight.getTime();
 
-		myweather[1] = { prevDateStamp: prevDateStamp, startStamp: startStamp, endStamp: endStamp, tstartStamp: tstartStamp, tendStamp: tendStamp, tomorrowMidNightStamp: tomorrowMidNightStamp, todayMidNightStamp: todayMidNightStamp };
+		let elevenFiftyNine = new Date();
+		elevenFiftyNine.setHours(11);
+		elevenFiftyNine.setMinutes(59);
+		elevenFiftyNine.setSeconds(0);
+		console.log(elevenFiftyNine)
+		let elevenFiftyNineStamp = elevenFiftyNine.getTime();
+
+		myweather[1] = { elevenFiftyNineStamp: elevenFiftyNineStamp, prevDateStamp: prevDateStamp, startStamp: startStamp, endStamp: endStamp, tstartStamp: tstartStamp, tendStamp: tendStamp, tomorrowMidNightStamp: tomorrowMidNightStamp, todayMidNightStamp: todayMidNightStamp };
 		myweather[0].currentTimeStamp = (new Date()).getTime();
 		this.setState({ weatherData: myweather });
 	}
@@ -113,8 +124,15 @@ class SunriseSunset extends React.Component
 		let convertToGarhi = Math.floor((( timePahar / 60 ) % onePahar ) / oneGarhi);
 		let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
 		let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
-		let paharTime = '\xa0\xa0' + convertToPahar + '\xa0\xa0\xa0' + ' | ' + '\xa0\xa0\xa0\xa0\xa0\xa0' + convertToGarhi + '\xa0\xa0\xa0\xa0\xa0' + ' | ' + '\xa0' + convertToPal + '\xa0' + ' | ' + '\xa0\xa0\xa0' + convertToLamha;
-		return paharTime;
+		let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
+		return (
+			<span>
+				<span>{`\u00A0\u00A0\u00A0${convertToPahar}\u00A0\u00A0\u00A0\u00A0`} |</span>
+				<span>{ `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${convertToGarhi}\u00A0\u00A0\u00A0\u00A0\u00A0`} |</span>
+				<span>{ `\u00A0\u00A0\u00A0${convertToPal}\u00A0`} |</span>
+				<span>{`\u00A0\u00A0\u00A0${convertToLamha}\u00A0\u00A0\u00A0`} </span>
+			</span>
+		);
 	}
 	convertToPaharNight(timePahar)
 	{
@@ -130,7 +148,7 @@ class SunriseSunset extends React.Component
 			let convertToGarhi = Math.floor((( timePahar / 60 ) % onePahar ) / oneGarhi);
 			let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
-			let paharTime = '\xa0\xa0' + convertToPahar + '\xa0\xa0\xa0' + ' | ' + '\xa0\xa0\xa0\xa0\xa0\xa0' + convertToGarhi + '\xa0\xa0\xa0\xa0\xa0' + ' | ' + '\xa0' + convertToPal + '\xa0' + ' | ' + '\xa0\xa0\xa0' + convertToLamha;
+			let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
 			return paharTime;
 		}
 		else if ( (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))
@@ -144,13 +162,32 @@ class SunriseSunset extends React.Component
 			let convertToGarhi = Math.floor((( timePahar / 60 ) % onePahar ) / oneGarhi);
 			let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
-			let paharTime = '\xa0\xa0' + convertToPahar + '\xa0\xa0\xa0' + ' | ' + '\xa0\xa0\xa0\xa0\xa0\xa0' + convertToGarhi + '\xa0\xa0\xa0\xa0\xa0' + ' | ' + '\xa0' + convertToPal + '\xa0' + ' | ' + '\xa0\xa0\xa0' + convertToLamha;
+			let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
 			return paharTime;
 		}
 	}
 	sunriseSunsetInPaharDay()
 	{
 		let weatherData = this.state.weatherData;
+		if ( weatherData[0].currentTimeStamp === weatherData[1].elevenFiftyNineStamp)
+		{
+			const latitude = weatherData[0].latitude;
+			const longitude = weatherData[0].longitude;
+			axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
+			.then((response) => {
+				console.log(response.data)
+				const placename = response.data.location.name;
+				const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
+				const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
+				const todayDate = response.data.forecast.forecastday[0].date;
+				const tomorrowDate = response.data.forecast.forecastday[1].date;
+				const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
+				const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
+				weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
+				this.setState({ weatherData: weatherData })
+			})
+			.catch((error) => error);
+		}
 		if ( weatherData[0].currentTimeStamp > weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp)
 		{
 			let sunrisePaharDiff = ( weatherData[0].currentTimeStamp - weatherData[1].startStamp ) / 1000;
@@ -188,6 +225,7 @@ class SunriseSunset extends React.Component
 		{
 			let weatherData = this.state.weatherData;
 			let unixdt = weatherData[1].prevDateStamp / 1000;
+			console.log(unixdt)
 			let latitude = weatherData[0].latitude;
 			let longitude = weatherData[0].longitude;
 			axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
@@ -195,18 +233,15 @@ class SunriseSunset extends React.Component
 				console.log(response.data)
 				let prevSunset = response.data.forecast.forecastday[0].astro.sunset;
 				let preDate = response.data.forecast.forecastday[0].date;
-				console.log(preDate)
 				let hr = parseInt(prevSunset.split(':')[0]) + 12;
 				let prevDate = new Date();
 				prevDate.setDate(preDate.split('-')[2]);
 				prevDate.setHours(hr);
 				prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
 				prevDate.setSeconds(0);
-				console.log(prevDate)
 				let prevStamp = prevDate.getTime();
 				weatherData[4] = { prevStamp: prevStamp };
 				this.setState({ weatherData: weatherData },() => {
-					console.log(weatherData[1].startStamp)
 					let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
 					let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
 					let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
@@ -244,63 +279,113 @@ class SunriseSunset extends React.Component
 			} catch (e) {}
 		}
 	}
+
 	render()
 	{
 		const { weatherData } = this.state;
-
+		const { handleHamburgerClick, isHamburgerContentVisible } = this.props;
 		if ( weatherData[0] && weatherData[1] )
 		{
-			if ( weatherData[2] && (weatherData[0].currentTimeStamp > weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp))
+			if ( weatherData[2] && (weatherData[0].currentTimeStamp >= weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp))
 			{
 				return (
-					<div align = 'center'>
-						<center className = 'firstDiv'> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
-						<center className = 'time-wrapper'>
-							<div className = 'Div-1'>
-								<p></p><br/>
-								<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Day Time : </i></font></p>
-								<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
+					<div className = 'sunset-sunrise-day-wrapper' align = 'center'>
+						<div className = 'div-wrapper'>
+							<center className = 'place-alignment'> <font size = '5' face = "verdana">Place : { weatherData[0].place } </font></center><br/><br/>
+							<center className = 'time-wrapper'>
+								<div className = 'Div-1'>
+									<p></p><br/>
+									<p align = 'right'> <font size = '2' face = 'Arial'> <i>Day Time : </i></font></p>
+									<p align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
+								</div>
+								<div className = 'Div-2'>
+									<p className = 'para-day'> <font size = '2' face = "verdana">Prahara | Gharhi |  Pal | Lamha</font></p>
+									<p align = 'left'>	&nbsp; &nbsp; { weatherData[2].sunrisePahar } </p>
+									<p align = 'left'> &nbsp; &nbsp; { weatherData[2].sunsetPahar } </p>
+								</div>
+							</center><br/><br/><br/>
+							<div className = 'info-div-day'> 
+								<b>Pahar:</b> A day and night consists of 4 pahars each. Day begins at sunrise and ends at sunset and Night is exactly opposite. Since length of day and night changes from season to season, pahars of the day and night are not of equal length of time.<br/><br/>
+
+								<b>Gharhi:</b> Each pahar is divided into 8 equal parts called Gharhi.<br/><br/>
+
+								<b>Pal:</b> 60 pals make one gharhi.<br/><br/>
+
+								<b>Lamha:</b> Lamha and pal are considered interchangeable however in this app we have set 60 lamhas for each pal. Explanation on why this was done can be found in the about page.<br/><br/>
+
+								The format of time in this app is displayed as:<br/><br/>
+
+								Pahar | Gharhi | Pal | Lamha<br/><br/>
+								1 | 5 | 27 | 52<br/><br/>
+
+								This app was conceptualized by Kashif-ul-Huda (@kaaashif) and designed by QED42 Team (@QED42).
 							</div>
-							<div className = 'Div-2'>
-								<p className = 'para'> <font size = '2' color = 'white' face = "verdana">	<b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
-								<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunrisePahar } </font></p>
-								<p align = 'left'> &nbsp; &nbsp; <font color = 'white'>{ weatherData[2].sunsetPahar } </font></p>
-							</div>
-						</center>
+						</div>
+						<div className = {`menu btn14 ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+			        <div className = "icon-circle"></div>
+			        <div className = "icon"></div>
+			      </div>
+			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
+			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About us</font></p></Link>
+						</div>
 					</div>
 				)
 			}
 			else if ( weatherData[3]
-				&& (((weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp))
-				|| ((weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
+				&& (((weatherData[0].currentTimeStamp >= weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp))
+				|| ((weatherData[0].currentTimeStamp >= weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
 			{
 				return (
-					<div align = 'center'>
-						<center className = 'firstDiv'> <font size = '5' color = 'white' face = "verdana">Place : <b>{ weatherData[0].place }</b> </font></center><br/><br/>
-						<center className = 'time-wrapper'>
-							<div className = 'Div-1'>
-								<p></p><br/>
-								<p align = 'right'> <font size = '2' color = 'white' face = 'Arial'> <i>Night Time : </i></font></p>
-								<p align = 'right'> <font size = '2' color = 'white' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
+					<div className = 'sunset-sunrise-night-wrapper' align = 'center'>
+						<div className = 'div-wrapper'>
+							<center className = 'center-wrapper-night'> <font size = '5' face = "verdana">Place : { weatherData[0].place } </font></center><br/><br/>
+							<center className = 'time-wrapper'>
+								<div className = 'Div-1'>
+									<p></p><br/>
+									<p className = 'center-wrapper-night' align = 'right'> <font size = '2' face = 'Arial'> <i>Night Time : </i></font></p>
+									<p className = 'center-wrapper-night' align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
+								</div>
+								<div className = 'Div-2'>
+									<p className = 'para-night'> <font size = '2' face = "verdana">Prahara | Gharhi |  Pal | Lamha</font></p>
+									<p className = 'center-wrapper-night' align = 'left'>	&nbsp; &nbsp;<font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
+									<p className = 'center-wrapper-night' align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
+								</div>
+							</center><br/><br/><br/>
+							<div className = 'info-div-night'> 
+								<b>Pahar:</b> A day and night consists of 4 pahars each. Day begins at sunrise and ends at sunset and Night is exactly opposite. Since length of day and night changes from season to season, pahars of the day and night are not of equal length of time.<br/><br/>
+
+								<b>Gharhi:</b> Each pahar is divided into 8 equal parts called Gharhi.<br/><br/>
+
+								<b>Pal:</b> 60 pals make one gharhi.<br/><br/>
+
+								<b>Lamha:</b> Lamha and pal are considered interchangeable however in this app we have set 60 lamhas for each pal. Explanation on why this was done can be found in the about page.<br/><br/>
+
+								The format of time in this app is displayed as:<br/><br/>
+
+								Pahar | Gharhi | Pal | Lamha<br/><br/>
+								1 | 5 | 27 | 52<br/><br/>
+
+								This app was conceptualized by Kashif-ul-Huda (@kaaashif) and designed by QED42 Team (@QED42).
 							</div>
-							<div className = 'Div-2'>
-								<p className = 'para'> <font size = '2' color = 'white' face = "verdana"><b>Pahar | Gharhi |  Pal | Lamha</b> </font></p>
-								<p align = 'left'>	&nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
-								<p align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
-							</div>
-						</center>
+						</div>
+						<div className = {`menu btn14 ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+			        <div className = "icon-circle"></div>
+			        <div className = "icon"></div>
+			      </div>
+			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
+			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About us</font></p></Link>
+						</div>
 					</div>
 				)
 			}
 			else
 			{
-				return <center className = 'center'> <font color = 'white' face = 'verdana'>Oops... Error fetching data!</font></center>;
+				return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...!</font></center>;
 			}
 		}
 		else
 		{
-			console.log('else running')
-			return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...</font></center>;
+			return <center className = 'center'> <font color = 'white' face = 'verdana'>Loading Data, Please Wait...!</font></center>;
 		}
 	}
 }
