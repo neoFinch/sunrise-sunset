@@ -319,7 +319,7 @@ class SunriseSunset extends React.Component
 								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
-						<div className = {`menu btn14Day ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+						<div className = {`menu btn14Day hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
 			        <div className = "icon"></div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
