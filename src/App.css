@@ -94,7 +94,16 @@ html, body, #root {
   border-right: none;
 }
 
+.loading-wrapper {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  top: 42%;
+}
 
+.loading-wrapper img {
+  width: 80px;
+}
 
 @media only screen and (max-width: 600px) {
   .Div-1{

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import  './App.css';
 import  './hamburger.scss';
+import PaharLoading from './PaharLoading';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
@@ -23,6 +24,7 @@ class SunriseSunset extends React.Component
 		if (navigator.geolocation)
 		{
 			navigator.geolocation.getCurrentPosition((position) => {
+				console.log(position)
 				let latitude = position.coords.latitude;
 				let longitude = position.coords.longitude;
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
@@ -40,13 +42,23 @@ class SunriseSunset extends React.Component
 						this.convertTimeStamp();
 						this.sunriseSunsetInPaharDay(); });
 				})
-				.catch((error) => error);
+				.catch((error) => {
+					console.log(error)
+				});
 			})
 		}
 		else
 		{
 			this.setState({ errorMsg: 'Please Allow Location to Serve you Better! Thank you.' });
 		}
+
+		navigator.geolocation.watchPosition(() => {}, (error) => {
+			if (error.code == error.PERMISSION_DENIED){
+				console.log("here we go")
+				this.setState({ errorMsg: 'Please Allow Location to Serve you Better! Thank you.' });
+			}
+		});
+
 		this.startTime();
 	}
 	convertTimeStamp()
@@ -339,7 +351,7 @@ class SunriseSunset extends React.Component
 								Pahar | Gharhi | Pal | Lamha<br/><br/>
 								1 | 5 | 27 | 52<br/><br/>
 
-								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
+								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and developed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
 						<div className = {`menu btn14Day hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
@@ -393,7 +405,7 @@ class SunriseSunset extends React.Component
 								Pahar | Gharhi | Pal | Lamha<br/><br/>
 								1 | 5 | 27 | 52<br/><br/>
 
-								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
+								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and developed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
 						<div>
@@ -410,12 +422,20 @@ class SunriseSunset extends React.Component
 			}
 			else
 			{
-				return <center className = 'center'> <font face = 'verdana'>Loading Data, Please Wait...!</font></center>;
+				return <center className = 'center'> <PaharLoading /> </center>;
 			}
+		}
+		else if (this.state.errorMsg) {
+			return (<center className = 'center'>
+				<span>
+					{this.state.errorMsg}
+				</span>
+			</center>
+			);
 		}
 		else
 		{
-			return <center className = 'center'> <font face = 'verdana'>Loading Data, Please Wait...!</font></center>;
+			return <center className = 'center'> <PaharLoading /> </center>;
 		}
 	}
 }
