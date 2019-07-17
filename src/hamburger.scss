@@ -112,17 +112,19 @@ $color: #b3e5fc;
   }
   
   .icon {
-    @include icon-day(3px, 18px);
+    @include icon-day(3px, 22px);
     border-radius: 4px;
     
     &:before{
-      @include icon-day-before(3px, 18px, -10px);
+      @include icon-day-before(3px, 22px, -9px);
       border-radius: 4px;
+      left: 0;
     }
     
     &:after{
-      @include icon-day-after(3px, 18px, 10px);
+      @include icon-day-after(3px, 22px, 9px);
       border-radius: 4px;
+      left: 0;
     }
   }
   
@@ -135,11 +137,11 @@ $color: #b3e5fc;
       background: transparent;
       
       &:before{
-        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+        transform: rotateZ(45deg) scaleX(1.2) translate(6.5px, 6.5px);
       }
 
       &:after{
-        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+        transform: rotateZ(-45deg) scaleX(1.25) translate(4.8px, -5.5px);
       }
     }
   }
@@ -162,17 +164,19 @@ $color: #b3e5fc;
   }
   
   .icon {
-    @include icon-night(3px, 18px);
+    @include icon-night(3px, 22px);
     border-radius: 4px;
     
     &:before{
-      @include icon-night-before(3px, 18px, -10px);
+      @include icon-night-before(3px, 22px, -9px);
       border-radius: 4px;
+      left: 0;
     }
     
     &:after{
-      @include icon-night-after(3px, 18px, 10px);
+      @include icon-night-after(3px, 22px, 9px);
       border-radius: 4px;
+      left: 0;
     }
   }
   
@@ -185,11 +189,11 @@ $color: #b3e5fc;
       background: transparent;
       
       &:before{
-        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+        transform: rotateZ(45deg) scaleX(1.2) translate(6.5px, 6.5px);
       }
 
       &:after{
-        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+        transform: rotateZ(-45deg) scaleX(1.25) translate(4.8px, -5.5px);
       }
     }
   }

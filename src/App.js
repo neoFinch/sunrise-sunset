@@ -25,10 +25,7 @@ class App extends React.Component
     const { isHamburgerContentVisible } = this.state;
     return <Router>
       <Route exact path="/" render={() => <SunriseSunset isHamburgerContentVisible={isHamburgerContentVisible} handleHamburgerClick={this.handleHamburgerClick} />} />
-        <br />
-        <br />
-        <br />
-      <Route exact path="/about" component={About} />
+      <Route exact path="/about" render={() => <About isHamburgerContentVisible={isHamburgerContentVisible} handleHamburgerClick={this.handleHamburgerClick} />} />
     </Router>
   }
 }

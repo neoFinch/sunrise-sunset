@@ -37,9 +37,9 @@
   color: white;
 }
 html, body, #root {
-  height: 100%;
-  width: 100%;
   margin: 0;
+  overflow: auto;
+  height: 100%;
 }
 .info-div-day{
   width: 80%;
@@ -69,6 +69,7 @@ html, body, #root {
   right: 0%;
   top:0;
   background: #e2e4b3;
+  padding: 50px 0;
 }
 .hamburger-visible-content{
   margin-top: 35px;
@@ -78,8 +79,22 @@ html, body, #root {
 }
 
 .hamburger-padding {
-  margin: 10px; 
+  margin-left: 2px; 
 }
+
+.pahar-header, .garhi-header, .pal-header, .lamha-header, .pahar-value, .garhi-value, .pal-value, .lamha-value {
+  max-width: 55px;
+  min-width: 55px;
+  text-align: center;
+  display: inline-block;
+  border-right: 1px solid grey;
+}
+
+.lamha-header, .lamha-value {
+  border-right: none;
+}
+
+
 
 @media only screen and (max-width: 600px) {
   .Div-1{
@@ -99,11 +114,7 @@ html, body, #root {
     flex-direction: column;
     flex: 2;
   }
-  .para-day{
-    text-align: center;
-  }
-  .para-night{
-    text-align: center;
+  .para-night {
     color: white;
   }
 }

@@ -127,11 +127,11 @@ class SunriseSunset extends React.Component
 		let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
 		let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
 		return (
-			<span>
-				<span>{`\u00A0\u00A0\u00A0${convertToPahar}\u00A0\u00A0\u00A0\u00A0`} |</span>
-				<span>{ `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${convertToGarhi}\u00A0\u00A0\u00A0\u00A0\u00A0`} |</span>
-				<span>{ `\u00A0\u00A0\u00A0${convertToPal}\u00A0`} |</span>
-				<span>{`\u00A0\u00A0\u00A0${convertToLamha}\u00A0\u00A0\u00A0`} </span>
+			<span className='values-wrappper'>
+				<span className='pahar-value'>{`${convertToPahar}`}</span>
+				<span className='garhi-value'>{ `${convertToGarhi}`}</span>
+				<span className='pal-value'>{ `${convertToPal}`}</span>
+				<span className='lamha-value'>{`${convertToLamha}`}</span>
 			</span>
 		);
 	}
@@ -150,7 +150,14 @@ class SunriseSunset extends React.Component
 			let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
 			let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
-			return paharTime;
+			return (
+				<span className='values-wrappper'>
+					<span className='pahar-value'>{`${convertToPahar}`}</span>
+					<span className='garhi-value'>{ `${convertToGarhi}`}</span>
+					<span className='pal-value'>{ `${convertToPal}`}</span>
+					<span className='lamha-value'>{`${convertToLamha}`} </span>
+				</span>
+			);
 		}
 		else if ( (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))
 		{
@@ -164,7 +171,14 @@ class SunriseSunset extends React.Component
 			let convertToPal = Math.floor(((( timePahar / 60 ) % onePahar ) % oneGarhi ) / onePal);
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
 			let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
-			return paharTime;
+			return (
+				<span className='values-wrappper'>
+					<span className='pahar-value'>{`${convertToPahar}`}</span>
+					<span className='garhi-value'>{ `${convertToGarhi}`}</span>
+					<span className='pal-value'>{ `${convertToPal}`}</span>
+					<span className='lamha-value'>{`${convertToLamha}`} </span>
+				</span>
+			);
 		}
 	}
 	sunriseSunsetInPaharDay()
@@ -299,9 +313,16 @@ class SunriseSunset extends React.Component
 									<p align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
 								</div>
 								<div className = 'Div-2'>
-									<p className = 'para-day'> <font size = '2' face = "verdana">Pahar | Gharhi |  Pal | Lamha</font></p>
-									<p align = 'left'>	&nbsp; &nbsp; { weatherData[2].sunrisePahar } </p>
-									<p align = 'left'> &nbsp; &nbsp; { weatherData[2].sunsetPahar } </p>
+									<p className = 'para-day'>
+										<font size = '2' face = "verdana">
+											<span className="pahar-header">Pahar</span>
+											<span className="garhi-header">Gharhi</span>
+											<span className="pal-header">Pal</span>
+											<span className="lamha-header">Lamha</span>
+										</font>
+									</p>
+									<p align = 'left'>{ weatherData[2].sunrisePahar } </p>
+									<p align = 'left'>{ weatherData[2].sunsetPahar } </p>
 								</div>
 							</center><br/><br/><br/>
 							<div className = 'info-div-day'> 
@@ -325,6 +346,7 @@ class SunriseSunset extends React.Component
 			        <div className = "icon"></div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
+			      	<Link to="/"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>Home</font></p></Link>
 			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About</font></p></Link>
 						</div>
 					</div>
@@ -345,9 +367,16 @@ class SunriseSunset extends React.Component
 									<p className = 'center-wrapper-night' align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
 								</div>
 								<div className = 'Div-2'>
-									<p className = 'para-night'> <font size = '2' face = "verdana">Pahar | Gharhi |  Pal | Lamha</font></p>
-									<p className = 'center-wrapper-night' align = 'left'>	&nbsp; &nbsp;<font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
-									<p className = 'center-wrapper-night' align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
+									<p className = 'para-night'>
+										<font size = '2' face = "verdana">
+											<span className="pahar-header">Pahar</span>
+											<span className="garhi-header">Gharhi</span>
+											<span className="pal-header">Pal</span>
+											<span className="lamha-header">Lamha</span>
+										</font>
+									</p>
+									<p className = 'center-wrapper-night' align = 'left'> <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
+									<p className = 'center-wrapper-night' align = 'left'> <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
 								</div>
 							</center><br/><br/><br/>
 							<div className = 'info-div-night'> 
@@ -367,8 +396,10 @@ class SunriseSunset extends React.Component
 								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
-						<div className = {`menu btn14Night hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
-			        <div className = "icon"></div>
+						<div>
+							<div className = {`menu btn14Night hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+				        <div className = "icon"></div>
+				      </div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
 			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About us</font></p></Link>
