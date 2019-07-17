@@ -52,6 +52,7 @@ html, body, #root {
 .div-wrapper{
   width: 100%;
   float: left;
+  margin-top: 50px;
 }
 .about-div{
   width: 80%;

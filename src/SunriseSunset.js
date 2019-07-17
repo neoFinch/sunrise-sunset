@@ -297,7 +297,7 @@ class SunriseSunset extends React.Component
 									<p align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
 								</div>
 								<div className = 'Div-2'>
-									<p className = 'para-day'> <font size = '2' face = "verdana">Prahara | Gharhi |  Pal | Lamha</font></p>
+									<p className = 'para-day'> <font size = '2' face = "verdana">Pahar | Gharhi |  Pal | Lamha</font></p>
 									<p align = 'left'>	&nbsp; &nbsp; { weatherData[2].sunrisePahar } </p>
 									<p align = 'left'> &nbsp; &nbsp; { weatherData[2].sunsetPahar } </p>
 								</div>
@@ -316,7 +316,7 @@ class SunriseSunset extends React.Component
 								Pahar | Gharhi | Pal | Lamha<br/><br/>
 								1 | 5 | 27 | 52<br/><br/>
 
-								This app was conceptualized by Kashif-ul-Huda (@kaaashif) and designed by QED42 Team (@QED42).
+								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
 						<div className = {`menu btn14Day ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
@@ -343,7 +343,7 @@ class SunriseSunset extends React.Component
 									<p className = 'center-wrapper-night' align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
 								</div>
 								<div className = 'Div-2'>
-									<p className = 'para-night'> <font size = '2' face = "verdana">Prahara | Gharhi |  Pal | Lamha</font></p>
+									<p className = 'para-night'> <font size = '2' face = "verdana">Pahar | Gharhi |  Pal | Lamha</font></p>
 									<p className = 'center-wrapper-night' align = 'left'>	&nbsp; &nbsp;<font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
 									<p className = 'center-wrapper-night' align = 'left'> &nbsp; &nbsp; <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
 								</div>
@@ -362,7 +362,7 @@ class SunriseSunset extends React.Component
 								Pahar | Gharhi | Pal | Lamha<br/><br/>
 								1 | 5 | 27 | 52<br/><br/>
 
-								This app was conceptualized by Kashif-ul-Huda (@kaaashif) and designed by QED42 Team (@QED42).
+								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
 						<div className = {`menu btn14Night ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>

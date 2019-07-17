@@ -101,7 +101,7 @@ $color: #b3e5fc;
 }
 /*-------------------------hamburger button for day-----------------------*/
 .btn14Day{
-  @include btnCustom(10px, 10px);
+  @include btnCustom(-15px, -5px);
   
   z-index: 999;
 
@@ -112,16 +112,16 @@ $color: #b3e5fc;
   }
   
   .icon {
-    @include icon-day(4px, 30px);
+    @include icon-day(3px, 18px);
     border-radius: 4px;
     
     &:before{
-      @include icon-day-before(4px, 30px, -10px);
+      @include icon-day-before(3px, 18px, -10px);
       border-radius: 4px;
     }
     
     &:after{
-      @include icon-day-after(4px, 30px, 10px);
+      @include icon-day-after(3px, 18px, 10px);
       border-radius: 4px;
     }
   }
