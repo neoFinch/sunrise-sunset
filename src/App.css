@@ -27,6 +27,9 @@
   height: 100%;
   width: 100%;
 }
+.sunset-sunrise-night-wrapper .div-wrapper {
+  background: black;
+}
 .place-alignment{
   width: 100%;
 }
@@ -75,7 +78,7 @@ html, body, #root {
 }
 
 .hamburger-padding {
-  margin: 10px;
+  margin: 10px; 
 }
 
 @media only screen and (max-width: 600px) {

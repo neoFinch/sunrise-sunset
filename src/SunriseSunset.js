@@ -62,8 +62,10 @@ class SunriseSunset extends React.Component
 
 		let prevDate = new Date();
 		let getPrevDate = this.state.weatherData[0].todayDate;
-		prevDate.setDate(getPrevDate.split('-')[2]);
+		prevDate.setDate(getPrevDate.split('-')[2] - 1);
+		prevDate.setHours(12);
 		let prevDateStamp = prevDate.getTime();
+		console.log(prevDate, prevDateStamp)
 
 		let time2 = weatherData[0].sunset;
 		let hr = parseInt(time2.split(':')[0]) + 12;
@@ -365,7 +367,7 @@ class SunriseSunset extends React.Component
 								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and designed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
-						<div className = {`menu btn14Night ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+						<div className = {`menu btn14Night hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
 			        <div className = "icon"></div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>

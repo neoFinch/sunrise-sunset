@@ -151,7 +151,7 @@ $color: #b3e5fc;
 /*-------------------------hamburger button for night-----------------------*/
 
 .btn14Night{
-  @include btnCustom(10px, 10px);
+  @include btnCustom(-15px, -5px);
   
   z-index: 999;
 
@@ -162,16 +162,16 @@ $color: #b3e5fc;
   }
   
   .icon {
-    @include icon-night(4px, 30px);
+    @include icon-night(3px, 18px);
     border-radius: 4px;
     
     &:before{
-      @include icon-night-before(4px, 30px, -10px);
+      @include icon-night-before(3px, 18px, -10px);
       border-radius: 4px;
     }
     
     &:after{
-      @include icon-night-after(4px, 30px, 10px);
+      @include icon-night-after(3px, 18px, 10px);
       border-radius: 4px;
     }
   }
