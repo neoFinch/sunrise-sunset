@@ -323,7 +323,7 @@ class SunriseSunset extends React.Component
 			        <div className = "icon"></div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
-			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About us</font></p></Link>
+			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About</font></p></Link>
 						</div>
 					</div>
 				)
