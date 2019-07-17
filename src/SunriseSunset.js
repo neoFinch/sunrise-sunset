@@ -345,7 +345,7 @@ class SunriseSunset extends React.Component
 						<div className = {`menu btn14Day hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
 			        <div className = "icon"></div>
 			      </div>
-			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
+			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`} onClick={handleHamburgerClick}>
 			      	<Link to="/"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>Home</font></p></Link>
 			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About</font></p></Link>
 						</div>
@@ -401,8 +401,9 @@ class SunriseSunset extends React.Component
 				        <div className = "icon"></div>
 				      </div>
 			      </div>
-			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
-			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About us</font></p></Link>
+			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`} onClick={handleHamburgerClick}>
+			      	<Link to="/"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>Home</font></p></Link>
+			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About</font></p></Link>
 						</div>
 					</div>
 				)
