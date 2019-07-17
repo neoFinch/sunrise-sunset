@@ -3,14 +3,14 @@ import axios from 'axios';
 import  './App.css';
 import  './hamburger.scss';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import About from './About';
+
 
 class SunriseSunset extends React.Component
 {
 	constructor(props)
 	{
 		super(props);
-		this.state = { weatherData: [], time: null };
+		this.state = { weatherData: [], time: null, errorMsg: '' };
 		this.startTime = this.startTime.bind(this);
 		this.convertToPaharDay = this.convertToPaharDay.bind(this);
 		this.convertToPaharNight = this.convertToPaharNight.bind(this);
@@ -45,6 +45,7 @@ class SunriseSunset extends React.Component
 		}
 		else
 		{
+			this.setState({ errorMsg: 'Please Allow Location to Serve you Better! Thank you.' });
 		}
 		this.startTime();
 	}
@@ -318,8 +319,7 @@ class SunriseSunset extends React.Component
 								This app was conceptualized by Kashif-ul-Huda (@kaaashif) and designed by QED42 Team (@QED42).
 							</div>
 						</div>
-						<div className = {`menu btn14 ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
-			        <div className = "icon-circle"></div>
+						<div className = {`menu btn14Day ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
 			        <div className = "icon"></div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>
@@ -365,8 +365,7 @@ class SunriseSunset extends React.Component
 								This app was conceptualized by Kashif-ul-Huda (@kaaashif) and designed by QED42 Team (@QED42).
 							</div>
 						</div>
-						<div className = {`menu btn14 ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
-			        <div className = "icon-circle"></div>
+						<div className = {`menu btn14Night ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
 			        <div className = "icon"></div>
 			      </div>
 			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`}>

@@ -81,7 +81,7 @@ html, body, #root {
   }
   .hamburger-content {
     position: absolute;
-    width: 100%;
+    width: 30%;
     height: 100%;
     right: 0%;
     top:0;

@@ -20,36 +20,68 @@ $color: #b3e5fc;
   transition-duration: 0.5s;
 }
 
-@mixin icon($height, $width) {
+@mixin icon-day($height, $width) {
   transition-duration: 0.5s;
   position: absolute;
   height: $height;
   width: $width;
   top: 30px;
-  background-color: white;
+  background-color: $dark;
 }
 
-@mixin icon-before($height, $width, $top) {
+@mixin icon-day-before($height, $width, $top) {
   transition-duration: 0.5s;
   position: absolute;
   width: $width;
   height: $height;
-  background-color: white;
+  background-color: $dark;
   content: "";
   top: $top;
 }
 
-@mixin icon-after($height, $width, $top) {
+@mixin icon-day-after($height, $width, $top) {
   transition-duration: 0.5s;
   position: absolute;
   width: $width;
   height: $height;
-  background-color: white;
+  background-color: $dark;
   content: "";
   top: $top;
 }
 
-@mixin icon-circle($height, $width) {
+/*--------------------------------------for night-------------------------------------*/
+@mixin icon-night($height, $width) {
+  transition-duration: 0.5s;
+  position: absolute;
+  height: $height;
+  width: $width;
+  top: 30px;
+  background-color: $light;
+}
+
+@mixin icon-night-before($height, $width, $top) {
+  transition-duration: 0.5s;
+  position: absolute;
+  width: $width;
+  height: $height;
+  background-color: $light;
+  content: "";
+  top: $top;
+}
+
+@mixin icon-night-after($height, $width, $top) {
+  transition-duration: 0.5s;
+  position: absolute;
+  width: $width;
+  height: $height;
+  background-color: $light;
+  content: "";
+  top: $top;
+}
+
+
+
+@mixin icon-circle($height, $width){
   transition-duration: 0.5s;
   position: absolute;
   height: $height;
@@ -67,7 +99,105 @@ $color: #b3e5fc;
   width: 100%;
   margin: 0 auto;
 }
+/*-------------------------hamburger button for day-----------------------*/
+.btn14Day{
+  @include btnCustom(10px, 10px);
+  
+  z-index: 999;
 
+  .icon-circle {
+    &:hover {
+      background: #fff;
+    }
+  }
+  
+  .icon {
+    @include icon-day(4px, 30px);
+    border-radius: 4px;
+    
+    &:before{
+      @include icon-day-before(4px, 30px, -10px);
+      border-radius: 4px;
+    }
+    
+    &:after{
+      @include icon-day-after(4px, 30px, 10px);
+      border-radius: 4px;
+    }
+  }
+  
+  &.open {
+    .icon-circle {
+      background: #fff;
+    }
+    .icon {
+      transition-duration: 0.5s;
+      background: transparent;
+      
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+/*-------------------------hamburger button for night-----------------------*/
+
+.btn14Night{
+  @include btnCustom(10px, 10px);
+  
+  z-index: 999;
+
+  .icon-circle {
+    &:hover {
+      background: #fff;
+    }
+  }
+  
+  .icon {
+    @include icon-night(4px, 30px);
+    border-radius: 4px;
+    
+    &:before{
+      @include icon-night-before(4px, 30px, -10px);
+      border-radius: 4px;
+    }
+    
+    &:after{
+      @include icon-night-after(4px, 30px, 10px);
+      border-radius: 4px;
+    }
+  }
+  
+  &.open {
+    .icon-circle {
+      background: #fff;
+    }
+    .icon {
+      transition-duration: 0.5s;
+      background: transparent;
+      
+      &:before{
+        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
+      }
+
+      &:after{
+        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+/*
 .btn1{
   @include btn(0px, 100px);
   
@@ -494,6 +624,7 @@ $color: #b3e5fc;
   }
   &:hover {
     cursor: pointer;
+
   }
 }
 
@@ -627,55 +758,8 @@ $color: #b3e5fc;
     cursor: pointer;
   }
 }
-
-.btn14{
-  @include btnCustom(10px, 10px);
-  
-  z-index: 999;
-
-  .icon-circle {
-    &:hover {
-      background: #fff;
-    }
-  }
-  
-  .icon {
-    @include icon(4px, 30px);
-    border-radius: 4px;
-    
-    &:before{
-      @include icon-before(4px, 30px, -10px);
-      border-radius: 4px;
-    }
-    
-    &:after{
-      @include icon-after(4px, 30px, 10px);
-      border-radius: 4px;
-    }
-  }
-  
-  &.open {
-    .icon-circle {
-      background: #fff;
-    }
-    .icon {
-      transition-duration: 0.5s;
-      background: transparent;
-      
-      &:before{
-        transform: rotateZ(45deg) scaleX(1.25) translate(6.5px, 6.5px);
-      }
-
-      &:after{
-        transform: rotateZ(-45deg) scaleX(1.25) translate(6px, -6px);
-      }
-    }
-  }
-  &:hover {
-    cursor: pointer;
-  }
-}
-
+*/
+/*
 .btn15{
   @include btn(120px, 400px);
   
@@ -714,3 +798,4 @@ $color: #b3e5fc;
     cursor: pointer;
   }
 }
+*/

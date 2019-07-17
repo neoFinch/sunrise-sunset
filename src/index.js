@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SunriseSunset from './SunriseSunset';
 import App from './App';
 
 class Root extends React.Component

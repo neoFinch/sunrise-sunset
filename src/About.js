@@ -7,13 +7,13 @@ class About extends React.Component
 	{	
 		return (
 			<div className = 'about-div'>
-				main pal do pal ka shayar hoon....<br/>
+				<i>main pal do pal ka shayar hoon....</i><br/><br/>
 
-				lamhon ne khata ki, sadiyon ne saza paayi<br/>
+				<i>lamhon ne khata ki, sadiyon ne saza paayi</i><br/><br/>
 
-				gharhi do gharhi<br/>
+				<i>gharhi do gharhi</i><br/><br/>
 
-				do pahar.<br/>
+				<i>do pahar.</i><br/><br/>
 
 				We all have heard these terminologies in our songs, proverbs, and in everyday usage. Pahar, Gharhi, and Pal, etc..have survived in our languages even though only a few of us know that these words are technical terms that denote specific lengths of time.<br/>
 
