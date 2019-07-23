@@ -223,7 +223,8 @@
 	margin-top: 12px;
 }
 .about-div-wrapper{
-	padding: 2% 10% 0% 5%;
+	position: relative;
+	padding: 2% 5% 0% 5%;
 	font-family: 'Montserrat';
 	font-style: normal;
 	font-weight: 500;
