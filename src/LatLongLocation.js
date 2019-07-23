@@ -1,48 +1,28 @@
-import React from 'react';
-import axios from 'axios';	
-import  './hamburger.scss';
-import PaharLoading from './PaharLoading';
-import SunsetImageUpload from './SunsetImageUpload';
-import SunriseImageUpload from './SunriseImageUpload';
-import { Link } from "react-router-dom";
-import './UIDesigning.css';
-import './App.css';
-import DownArrow from './DownArrow';
-
-
-class SunriseSunset extends React.Component
-{
+class LatLongLocation{
 	constructor(props)
 	{
 		super(props);
-		this.state = { weatherData: [], time: null, errorMsg: '' };
-		this.startTime = this.startTime.bind(this);
+		this.state = { weatherData: [] };
 		this.convertToPaharDay = this.convertToPaharDay.bind(this);
 		this.convertToPaharNight = this.convertToPaharNight.bind(this);
 		this.sunriseSunsetInPaharDay = this.sunriseSunsetInPaharDay.bind(this);
 		this.convertTimeStamp = this.convertTimeStamp.bind(this);
-		this.scrollInfoDiv = this.scrollInfoDiv.bind(this);
-		this.returningMainDiv = this.returningMainDiv.bind(this);
+		this.fetchingLocation = this.fetchingLocation.bind(this);
 	}
-	componentDidMount()
+	fetchingLocation(lat,long)
 	{
 		let weatherData = this.state.weatherData;
-		if (navigator.geolocation)
-		{
-			navigator.geolocation.getCurrentPosition((position) => {
-				let latitude = position.coords.latitude;
-				let longitude = position.coords.longitude;
-				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
+		axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${lat},${long}&days=2`)
 				.then((response) => {
 					console.log(response.data)
 					let placename = response.data.location.name;
 					const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 					const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
-					const todayDate = response.data.forecast.forecastday[0].date;
+					const todayDate = response.data.forecast.location.localtime_epoch * 1000;
 					const tomorrowDate = response.data.forecast.forecastday[1].date;
 					const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
 					const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
-					weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
+					weatherData[0] = { currentTimeStamp: todayDate, tomorrowDate: tomorrowDate, sunrise: sunriseTime, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime};
 					this.setState({ weatherData: weatherData },() => {
 						this.convertTimeStamp();
 						this.sunriseSunsetInPaharDay(); });
@@ -50,30 +30,6 @@ class SunriseSunset extends React.Component
 				.catch((error) => {
 					console.log(error)
 				});
-			})
-		}
-		else
-		{
-			this.setState({ errorMsg: 'Please Allow Location to Serve you Better! Thank you.' });
-		}
-
-		navigator.geolocation.watchPosition(() => {}, (error) => {
-			if (error.code === error.PERMISSION_DENIED){
-				this.setState({ errorMsg: 'Please Allow Location to Serve you Better! Thank you.' });
-			}
-		});
-
-		this.startTime();
-	}
-	scrollInfoDiv()
-	{
-		let container = document.getElementById('scrollUp');
-		container.scrollIntoView({block: 'start', behaviour: 'smooth'});
-	}
-	returningMainDiv()
-	{
-		let container = document.getElementById('main-div');
-		container.scrollIntoView({block: 'start', behaviour: 'smooth'});
 	}
 	convertTimeStamp()
 	{
@@ -448,7 +404,7 @@ class SunriseSunset extends React.Component
 				|| ((weatherData[0].currentTimeStamp >= weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
 			{
 				return (
-					<div className = 'main-content-wrapper'>
+					<div>
 						<div id = 'main-div'className = 'sunrise-sunset-night-wrapper' >
 							<div className = 'about-link-wrapper' >
 								<Link className = 'link-wrapper' to="/about"> ABOUT </Link>
@@ -531,3 +487,4 @@ class SunriseSunset extends React.Component
 	}
 }
 export default SunriseSunset;
+}
