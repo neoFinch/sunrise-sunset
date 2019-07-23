@@ -372,7 +372,7 @@ class SunriseSunset extends React.Component
 			if ( weatherData[2] && (weatherData[0].currentTimeStamp >= weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp))
 			{
 				return (
-					<div>
+					<div className = 'main-content-wrapper'>
 						<div id = 'main-div' className = 'sunrise-sunset-day-wrapper'>
 							<div className = 'about-link-wrapper' >
 								<Link className = 'link-wrapper' to="/about"> ABOUT </Link>

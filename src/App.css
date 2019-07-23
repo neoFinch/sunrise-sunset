@@ -1,3 +1,31 @@
+@font-face {
+  font-family: Montserrat-ExtraLight;
+  src: url(./assets/images/Montserrat-ExtraLight.ttf);
+}
+@font-face {
+  font-family: Montserrat-Light;
+  src: url(./assets/images/Montserrat-Light.ttf);
+}
+@font-face {
+  font-family: Montserrat-Medium;
+  src: url(./assets/images/Montserrat-Medium.ttf);
+}
+@font-face {
+  font-family: Montserrat;
+  src: url(./assets/images/Montserrat-Regular.ttf);
+}
+@font-face {
+  font-family: Baskerville;
+  src: url(./assets/images/BaskervilleItalicBT.ttf);
+}
+@font-face {
+  font-family: BebasNeue-Book;
+  src: url(./assets/images/BebasNeue-Book.ttf);
+}
+@font-face {
+  font-family: BebasNeue-Regular;
+  src: url(./assets/images/BebasNeue-Regular.ttf);
+}
 .Div-1 {
   float: left;
   width: 45%;

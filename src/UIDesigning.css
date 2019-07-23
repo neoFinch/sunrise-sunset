@@ -1,23 +1,32 @@
+.main-content-wrapper{
+	height: 100%
+}
 .sunrise-sunset-day-wrapper{
 	background-color: #FBFBFB;
+	height: 100%;
+	position: relative;
 }
 .about-link-wrapper{
+	position: absolute;
+	right: 21px;
+	top: 21px;
 	font-family: BebasNeue-Book;
 	font-size: 20px;
 	line-height: 18px;
 	text-align: center;
 	letter-spacing: 0.9px;
 	color: #6D7278;
-	padding: 3% 7% 8% 65%;
 }
 .home-link-wrapper{
+	position: absolute;
+	right: 21px;
+	top: 21px;
 	font-family: BebasNeue-Book;
 	font-size: 20px;
 	line-height: 18px;
 	text-align: center;
 	letter-spacing: 0.9px;
 	color: #6D7278;
-	padding: 1% 1% 4% 87%;
 }
 .link-wrapper{
 	color: inherit;
@@ -32,6 +41,7 @@
 	bottom: 0%;
 }
 .location-wrapper{
+	padding-top: 14%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -152,7 +162,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding-top: 10px;
+	padding-top: 14px;
 	padding-right: 21px;
 	width: 255px;
 	height: 48px;
@@ -171,17 +181,17 @@
 }
 .pahar-time-wrapper, .garhi-time-wrapper, .pal-time-wrapper{
 	font-family: BebasNeue-Book;
-	font-size: 50px;
+	font-size: 48px;
 	line-height: 48px;
 	text-align: center;
 	letter-spacing: 2.4px;
 	width: 80px;
-	border-right: 2px solid grey;
+	border-right: 2px solid #827575;
 	color: rgba(0, 0, 0, 0.85);
 }
 .lamha-time-wrapper{
 	font-family: BebasNeue-Book;
-	font-size: 50px;
+	font-size: 48px;
 	line-height: 48px;
 	text-align: center;
 	width: 80px;
@@ -223,7 +233,7 @@
 	color: #9B9B9B;
 }
 .about-heading-wrapper{
-	font-family: 'Montserrat';
+	font-family: 'Montserrat-Medium';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 15px;
@@ -232,6 +242,7 @@
 	color: rgba(0, 0, 0, 0.85);
 }
 .shayari-wrapper{
+	padding-top: 61px;
 	text-align: center;
 	font-family: Baskerville;
 	color: rgba(0, 0, 0, 0.85);
@@ -255,7 +266,9 @@
 	text-align: center;
 	letter-spacing: 0.9px;
 	color: #6D7278;
-	padding: 10% 7% 10% 20%;
+	position: absolute;
+	bottom: 21px;
+  left: 21px;
 }
 .go-up-wrapper{
 	font-family: BebasNeue-Book;
@@ -287,7 +300,7 @@
 }
 .pahar-heading, .garhi-heading, .pal-heading, .lamha-heading{
 	color: rgba(0, 0, 0, 0.85);
-	font-family: Montserrat;
+	font-family: Montserrat-Medium;
 	font-style: normal;
 	font-weight: 600;
 	font-size: 20px;
@@ -299,35 +312,40 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding-top: 40px;
+		padding-top: 42%;
 	}
 	.about-link-wrapper{
+		position: absolute;
+		top: 21px;
+		right: 21px;
 		font-family: BebasNeue-Book;
 		font-size: 20px;
 		line-height: 18px;
 		text-align: center;
 		letter-spacing: 0.9px;
 		color: #6D7278;
-		padding: 10% 5% 20% 65%;
 	}
 	.home-link-wrapper{
+		position: absolute;
+		top: 21px;
+		right: 21px;
 		font-family: BebasNeue-Book;
 		font-size: 20px;
 		line-height: 18px;
 		text-align: center;
 		letter-spacing: 0.9px;
 		color: #6D7278;
-		padding: 7% 5% 20% 87%;
 	}
 	.read-more-wrapper{
-		display: flex;
+		position: absolute;
 		font-family: BebasNeue-Book;
 		font-size: 20px;
 		line-height: 18px;
 		text-align: center;
 		letter-spacing: 0.9px;
 		color: #6D7278;
-		padding: 49% 7% 10% 10%;
+		bottom: 21px;
+		left: 21px;
 	}
 
 }
