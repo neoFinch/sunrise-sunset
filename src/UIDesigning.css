@@ -178,7 +178,7 @@
 	margin-left: 3px;
 }
 .pahar-time-wrapper, .garhi-time-wrapper, .pal-time-wrapper{
-	font-family: BebasNeue-Book;
+	font-family: BebasNeue-Regular;
 	font-size: 48px;
 	line-height: 48px;
 	text-align: center;
@@ -294,8 +294,8 @@
 	color: #9B9B9B;
 }
 .info-div-wrapper a{
+	text-decoration: underline;
 	color: rgba(0, 0, 0, 0.85);
-	text-decoration: none;
 }
 .pahar-heading, .garhi-heading, .pal-heading, .lamha-heading{
 	color: rgba(0, 0, 0, 0.85);
