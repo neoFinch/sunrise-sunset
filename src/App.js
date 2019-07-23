@@ -6,29 +6,13 @@ import SunriseSunset from './SunriseSunset';
 
 class App extends React.Component
 { 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHamburgerContentVisible: false,
-    }
-    this.handleHamburgerClick = this.handleHamburgerClick.bind(this);
-  }
-
-  handleHamburgerClick() {
-    this.setState({
-      isHamburgerContentVisible: !this.state.isHamburgerContentVisible,
-    })
-  }
-  
   render()
   {
-    const { isHamburgerContentVisible } = this.state;
     return <Router>
-      <Route exact path="/" render={() => <SunriseSunset isHamburgerContentVisible={isHamburgerContentVisible} handleHamburgerClick={this.handleHamburgerClick} />} />
-      <Route exact path="/about" render={() => <About isHamburgerContentVisible={isHamburgerContentVisible} handleHamburgerClick={this.handleHamburgerClick} />} />
+      <Route exact path="/" render={() => <SunriseSunset />} />
+      <Route exact path="/about" render={() => <About />} />
     </Router>
   }
 }
 
 export default App;
-// <SunriseSunset isHamburgerContentVisible={isHamburgerContentVisible} handleHamburgerClick={this.handleHamburgerClick} />}

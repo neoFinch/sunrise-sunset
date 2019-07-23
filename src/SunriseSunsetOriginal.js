@@ -1,13 +1,9 @@
 import React from 'react';
-import axios from 'axios';	
+import axios from 'axios';
+import  './App.css';
 import  './hamburger.scss';
 import PaharLoading from './PaharLoading';
-import SunsetImageUpload from './SunsetImageUpload';
-import SunriseImageUpload from './SunriseImageUpload';
-import { Link } from "react-router-dom";
-import './UIDesigning.css';
-import './App.css';
-import DownArrow from './DownArrow';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 class SunriseSunset extends React.Component
@@ -21,8 +17,6 @@ class SunriseSunset extends React.Component
 		this.convertToPaharNight = this.convertToPaharNight.bind(this);
 		this.sunriseSunsetInPaharDay = this.sunriseSunsetInPaharDay.bind(this);
 		this.convertTimeStamp = this.convertTimeStamp.bind(this);
-		this.scrollInfoDiv = this.scrollInfoDiv.bind(this);
-		this.returningMainDiv = this.returningMainDiv.bind(this);
 	}
 	componentDidMount()
 	{
@@ -64,16 +58,6 @@ class SunriseSunset extends React.Component
 		});
 
 		this.startTime();
-	}
-	scrollInfoDiv()
-	{
-		let container = document.getElementById('scrollUp');
-		container.scrollIntoView({block: 'start', behaviour: 'smooth'});
-	}
-	returningMainDiv()
-	{
-		let container = document.getElementById('main-div');
-		container.scrollIntoView({block: 'start', behaviour: 'smooth'});
 	}
 	convertTimeStamp()
 	{
@@ -170,11 +154,11 @@ class SunriseSunset extends React.Component
 		let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
 		//let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
 		return (
-			<span className = 'time-values-wrapper'>
-				<span className='pahar-time-wrapper'>{`${convertToPahar}`}</span>
-				<span className='garhi-time-wrapper'>{ `${convertToGarhi}`}</span>
-				<span className='pal-time-wrapper'>{ `${convertToPal}`}</span>
-				<span className='lamha-time-wrapper'>{`${convertToLamha}`}</span>
+			<span className='values-wrappper'>
+				<span className='pahar-value'>{`${convertToPahar}`}</span>
+				<span className='garhi-value'>{ `${convertToGarhi}`}</span>
+				<span className='pal-value'>{ `${convertToPal}`}</span>
+				<span className='lamha-value'>{`${convertToLamha}`}</span>
 			</span>
 		);
 	}
@@ -197,11 +181,11 @@ class SunriseSunset extends React.Component
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
 			//let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
 			return (
-				<span className='time-values-wrapper'>
-					<span className='pahar-time-wrapper'>{`${convertToPahar}`}</span>
-					<span className='garhi-time-wrapper'>{ `${convertToGarhi}`}</span>
-					<span className='pal-time-wrapper'>{ `${convertToPal}`}</span>
-					<span className='lamha-time-wrapper'>{`${convertToLamha}`} </span>
+				<span className='values-wrappper'>
+					<span className='pahar-value'>{`${convertToPahar}`}</span>
+					<span className='garhi-value'>{ `${convertToGarhi}`}</span>
+					<span className='pal-value'>{ `${convertToPal}`}</span>
+					<span className='lamha-value'>{`${convertToLamha}`} </span>
 				</span>
 			);
 		}
@@ -218,11 +202,11 @@ class SunriseSunset extends React.Component
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
 			//let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
 			return (
-				<span className='time-values-wrapper'>
-					<span className='pahar-time-wrapper'>{`${convertToPahar}`}</span>
-					<span className='garhi-time-wrapper'>{ `${convertToGarhi}`}</span>
-					<span className='pal-time-wrapper'>{ `${convertToPal}`}</span>
-					<span className='lamha-time-wrapper'>{`${convertToLamha}`} </span>
+				<span className='values-wrappper'>
+					<span className='pahar-value'>{`${convertToPahar}`}</span>
+					<span className='garhi-value'>{ `${convertToGarhi}`}</span>
+					<span className='pal-value'>{ `${convertToPal}`}</span>
+					<span className='lamha-value'>{`${convertToLamha}`} </span>
 				</span>
 			);
 		}
@@ -340,31 +324,22 @@ class SunriseSunset extends React.Component
 	  let s = (currentTime.getSeconds() < 10 ? '0' : '') + currentTime.getSeconds();
 	  let ms = (currentTime.getMilliseconds() < 10 ? '0' : '') + currentTime.getMilliseconds();
 		let realTime = h + ":" + m + ":" + s + ':' + ms;
-	  this.timer = setTimeout(this.startTime, 300);
-	  this.stateTimer = setTimeout(this.setState({ time: realTime }), 400);
+	  setTimeout(this.startTime, 300);
+	  setTimeout(this.setState({ time: realTime }), 400);
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.time !== this.state.time) {
 			try {
-				const currentTimeStamp = (new Date()).getTime();
-				const currentWeatherData = Object.assign({}, this.state.weatherData);
-				currentWeatherData[0].currentTimeStamp = currentTimeStamp;
-				this.setState({
-					weatherData: currentWeatherData,
-				})
+				this.state.weatherData[0].currentTimeStamp = (new Date()).getTime();
 				this.sunriseSunsetInPaharDay();
 			} catch (e) {}
 		}
 	}
 
-	componentWillUnmount() {
-		this.timer && clearTimeout(this.timer);
-		this.stateTimer && clearTimeout(this.stateTimer);
-	}
-
 	render()
 	{
 		const { weatherData } = this.state;
+		const { handleHamburgerClick, isHamburgerContentVisible } = this.props;
 		if ( weatherData[0] && weatherData[1] )
 		{
 			//-----------------------------code for day time-------------------------------------
@@ -372,161 +347,130 @@ class SunriseSunset extends React.Component
 			if ( weatherData[2] && (weatherData[0].currentTimeStamp >= weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp))
 			{
 				return (
-					<div>
-						<div id = 'main-div' className = 'sunrise-sunset-day-wrapper'>
-							<div className = 'about-link-wrapper' >
-								<Link className = 'link-wrapper' to="/about"> ABOUT </Link>
-							</div>
-							<div className = 'location-wrapper'>
-								<div className = 'location-text-wrapper'>CURRENT TIME AT</div>
-								<div className = 'location-day'> { weatherData[0].place } </div>
-							</div>
-							<center>
-								<div className = 'daytime-container'>
-									<div className = 'daytime-image-wrapper'>
-										<span> <SunriseImageUpload/> </span>	
-										<span className = 'daytime-text-container'>Daytime</span>
-									</div>
-									<div className = 'time-container'>
-											{ weatherData[2].sunrisePahar }
-											<span className = 'time-text-wrapper'>
-												<span className = 'pahar-text-wrapper'>PAHAR</span>
-												<span className = 'garhi-text-wrapper'>GHARHI</span>
-												<span className = 'pal-text-wrapper'>PAL</span>
-												<span className = 'lamha-text-wrapper'>LAMHA</span>
-											</span>
-									</div>
+					<div className = 'sunset-sunrise-day-wrapper' align = 'center'>
+						<div className = 'div-wrapper'>
+							<center className = 'place-alignment'> <font size = '5' face = "verdana">Place : { weatherData[0].place } </font></center><br/><br/>
+							<center className = 'time-wrapper'>
+								<div className = 'Div-1'>
+									<p></p><br/>
+									<p align = 'right'> <font size = '2' face = 'Arial'> <i>Day Time : </i></font></p>
+									<p align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunset : </i></font></p>
 								</div>
-							</center>
+								<div className = 'Div-2'>
+									<p className = 'para-day'>
+										<font size = '2' face = "verdana">
+											<span className="pahar-header">Pahar</span>
+											<span className="garhi-header">Gharhi</span>
+											<span className="pal-header">Pal</span>
+											<span className="lamha-header">Lamha</span>
+										</font>
+									</p>
+									<p align = 'left'>{ weatherData[2].sunrisePahar } </p>
+									<p align = 'left'>{ weatherData[2].sunsetPahar } </p>
+								</div>
+							</center><br/><br/><br/>
+							<div className = 'info-div-day'> 
+								<b>Pahar:</b> A day and night consists of 4 pahars each. Day begins at sunrise and ends at sunset and Night is exactly opposite. Since length of day and night changes from season to season, pahars of the day and night are not of equal length of time.<br/><br/>
 
-							<center>
-								<div className = 'daytime-sunset-container'>
-									<div className = 'daytime-image-wrapper'>
-										<span> <SunsetImageUpload/> </span>	
-										<span className = 'daytime-sunset-text-container'>Time to sunset</span>
-									</div>
-									<div className = 'time-container'>
-											{ weatherData[2].sunsetPahar }
-											<span className = 'time-text-wrapper'>
-												<span className = 'pahar-text-wrapper'>PAHAR</span>
-												<span className = 'garhi-text-wrapper'>GHARHI</span>
-												<span className = 'pal-text-wrapper'>PAL</span>
-												<span className = 'lamha-text-wrapper'>LAMHA</span>
-											</span>
-									</div>
-								</div>
-							</center>
-							<div className = 'read-more-wrapper' onClick = { this.scrollInfoDiv }>
-								<div className = 'link-wrapper'>READ MORE</div>
-								<DownArrow />
+								<b>Gharhi:</b> Each pahar is divided into 8 equal parts called Gharhi.<br/><br/>
+
+								<b>Pal:</b> 60 pals make one gharhi.<br/><br/>
+
+								<b>Lamha:</b> Lamha and pal are considered interchangeable however in this app we have set 60 lamhas for each pal. Explanation on why this was done can be found in the about page.<br/><br/>
+
+								The format of time in this app is displayed as:<br/><br/>
+
+								Pahar | Gharhi | Pal | Lamha<br/><br/>
+								1 | 5 | 27 | 52<br/><br/>
+
+								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and developed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
-						<div id = 'scrollUp' className = 'info-div-wrapper'> 
-							<div className = 'pahar-heading'><b>PAHAR</b></div> A day and night consists of 4 pahars each. Day begins at sunrise and ends at sunset and Night is exactly opposite. Since length of day and night changes from season to season, pahars of the day and night are not of equal length of time.<br/><br/>
-
-							<div className = 'garhi-heading'><b>GHARHI</b></div> Each pahar is divided into 8 equal parts called Gharhi.<br/><br/>
-
-							<div className = 'pal-heading'><b>PAL</b></div> 60 pals make one gharhi.<br/><br/>
-
-							<div className = 'lamha-heading'><b>LAMHA</b></div> Lamha and pal are considered interchangeable however in this app we have set 60 lamhas for each pal. Explanation on why this was done can be found in the about page.<br/><br/>
-
-							The format of time in this app is displayed as:<br/><br/>
-
-							Pahar | Gharhi | Pal | Lamha<br/><br/>
-							1 | 5 | 27 | 52<br/><br/>
-
-							This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and developed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
-							<div id = 'go-up' className = 'go-up-wrapper' onClick = { this.returningMainDiv }>
-								<span className = 'link-wrapper'>GO UP</span>
-							</div>
+						<div className = {`menu btn14Day hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+			        <div className = "icon"></div>
+			      </div>
+			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`} onClick={handleHamburgerClick}>
+			      	<Link to="/"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>Home</font></p></Link>
+			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About</font></p></Link>
 						</div>
 					</div>
 				)
 			}
+
+			// ---------------------------------code for sunset time till next morning------------------------------
+
 			else if ( weatherData[3]
 				&& (((weatherData[0].currentTimeStamp >= weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp))
 				|| ((weatherData[0].currentTimeStamp >= weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp))) )
 			{
 				return (
-					<div>
-						<div id = 'main-div'className = 'sunrise-sunset-night-wrapper' >
-							<div className = 'about-link-wrapper' >
-								<Link className = 'link-wrapper' to="/about"> ABOUT </Link>
-							</div>
-							<div className = 'location-wrapper'>
-								<div className = 'location-text-wrapper'>CURRENT TIME AT</div>
-								<div className = 'location-night'> { weatherData[0].place } </div>
-							</div>
-							<center>
-								<div className = 'nighttime-container'>
-									<div className = 'nighttime-image-wrapper'>
-										<span> <SunsetImageUpload /> </span>	
-										<span className = 'nighttime-text-container'>Night-time</span>
-									</div>
-									<div className = 'time-container'>
-											{ weatherData[3].sunsetPahar }
-											<span className = 'time-text-wrapper'>
-												<span className = 'pahar-text-wrapper'>PAHAR</span>
-												<span className = 'garhi-text-wrapper'>GHARHI</span>
-												<span className = 'pal-text-wrapper'>PAL</span>
-												<span className = 'lamha-text-wrapper'>LAMHA</span>
-											</span>
-									</div>
+					<div className = 'sunset-sunrise-night-wrapper' align = 'center'>
+						<div className = 'div-wrapper'>
+							<center className = 'center-wrapper-night'> <font size = '5' face = "verdana">Place : { weatherData[0].place } </font></center><br/><br/>
+							<center className = 'time-wrapper'>
+								<div className = 'Div-1'>
+									<p></p><br/>
+									<p className = 'center-wrapper-night' align = 'right'> <font size = '2' face = 'Arial'> <i>Night Time : </i></font></p>
+									<p className = 'center-wrapper-night' align = 'right'> <font size = '2' fontStyle = 'Italic' face = 'Arial'> <i>Time to Sunrise : </i></font></p>
 								</div>
-							</center>
+								<div className = 'Div-2'>
+									<p className = 'para-night'>
+										<font size = '2' face = "verdana">
+											<span className="pahar-header">Pahar</span>
+											<span className="garhi-header">Gharhi</span>
+											<span className="pal-header">Pal</span>
+											<span className="lamha-header">Lamha</span>
+										</font>
+									</p>
+									<p className = 'center-wrapper-night' align = 'left'> <font color = 'white'> { weatherData[3].sunsetPahar } </font></p>
+									<p className = 'center-wrapper-night' align = 'left'> <font color = 'white'> { weatherData[3].sunrisePahar } </font></p>
+								</div>
+							</center><br/><br/><br/>
+							<div className = 'info-div-night'> 
+								<b>Pahar:</b> A day and night consists of 4 pahars each. Day begins at sunrise and ends at sunset and Night is exactly opposite. Since length of day and night changes from season to season, pahars of the day and night are not of equal length of time.<br/><br/>
 
-							<center>
-								<div className = 'nighttime-sunrise-container'>
-									<div className = 'nighttime-image-wrapper'>
-										<span> <SunriseImageUpload /> </span>	
-										<span className = 'nighttime-sunrise-text-container'>Time to sunrise</span>
-									</div>
-									<div className = 'time-container'>
-											{ weatherData[3].sunrisePahar }
-											<span className = 'time-text-wrapper'>
-												<span className = 'pahar-text-wrapper'>PAHAR</span>
-												<span className = 'garhi-text-wrapper'>GHARHI</span>
-												<span className = 'pal-text-wrapper'>PAL</span>
-												<span className = 'lamha-text-wrapper'>LAMHA</span>
-											</span>
-									</div>
-								</div>
-							</center>
-							<div id = 'read-more' className = 'read-more-wrapper' onClick = { this.scrollInfoDiv }>
-								<div className = 'link-wrapper'>READ MORE</div>
-								<DownArrow />
+								<b>Gharhi:</b> Each pahar is divided into 8 equal parts called Gharhi.<br/><br/>
+
+								<b>Pal:</b> 60 pals make one gharhi.<br/><br/>
+
+								<b>Lamha:</b> Lamha and pal are considered interchangeable however in this app we have set 60 lamhas for each pal. Explanation on why this was done can be found in the about page.<br/><br/>
+
+								The format of time in this app is displayed as:<br/><br/>
+
+								Pahar | Gharhi | Pal | Lamha<br/><br/>
+								1 | 5 | 27 | 52<br/><br/>
+
+								This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and developed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
 							</div>
 						</div>
-						<div id = 'scrollUp' className = 'info-div-wrapper'> 
-							<div className = 'pahar-heading'><b>PAHAR</b></div> A day and night consists of 4 pahars each. Day begins at sunrise and ends at sunset and Night is exactly opposite. Since length of day and night changes from season to season, pahars of the day and night are not of equal length of time.<br/><br/>
-
-							<div className = 'garhi-heading'><b>GHARHI</b></div>Each pahar is divided into 8 equal parts called Gharhi.<br/><br/>
-
-							<div className = 'pal-heading'><b>PAL</b></div>60 pals make one gharhi.<br/><br/>
-
-							<div className = 'lamha-heading'><b>LAMHA</b></div>Lamha and pal are considered interchangeable however in this app we have set 60 lamhas for each pal. Explanation on why this was done can be found in the about page.<br/><br/>
-
-							The format of time in this app is displayed as:<br/><br/>
-
-							Pahar | Gharhi | Pal | Lamha<br/><br/>
-							1 | 5 | 27 | 52<br/><br/>
-
-							This app was conceptualized by Kashif-ul-Huda (<a target='_blank' href='https://twitter.com/kaaashif'>@kaaashif</a>) and developed by QED42 Team (<a target='_blank' href='https://twitter.com/qed42'>@QED42</a>).
-							<div id = 'go-up' className = 'go-up-wrapper' onClick = { this.returningMainDiv }>
-								<span className = 'link-wrapper'>GO UP</span>
-							</div>	
+						<div>
+							<div className = {`menu btn14Night hamburger-padding ${isHamburgerContentVisible && 'open'}`} data-menu = "14" onClick = {handleHamburgerClick}>
+				        <div className = "icon"></div>
+				      </div>
+			      </div>
+			      <div className = {`hamburger-content ${(isHamburgerContentVisible && 'visible') || 'hidden'}`} onClick={handleHamburgerClick}>
+			      	<Link to="/"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>Home</font></p></Link>
+			      	<Link to="/about"><p className = 'hamburger-visible-content'><font face = 'verdana' color = 'black'>About</font></p></Link>
 						</div>
 					</div>
 				)
-			}		
-			else 
+			}
+			else
 			{
 				return <center className = 'center'> <PaharLoading /> </center>;
 			}
 		}
+		else if (this.state.errorMsg) {
+			return (<center className = 'center'>
+				<span>
+					{this.state.errorMsg}
+				</span>
+			</center>
+			);
+		}
 		else
 		{
-			return <center className = 'center'> <PaharLoading /> </center>;	
+			return <center className = 'center'> <PaharLoading /> </center>;
 		}
 	}
 }

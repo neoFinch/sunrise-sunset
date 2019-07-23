@@ -3,10 +3,6 @@ import loading from './assets/images/pahar-loading.svg';
 
 class PaharLoading extends React.Component
 {
-	constructor(props)
-	{
-		super(props);
-	}
 	render()
 	{
 		return (
