@@ -9,7 +9,6 @@ import './UIDesigning.css';
 import './App.css';
 import DownArrow from './DownArrow';
 
-
 class SunriseSunset extends React.Component
 {
 	constructor(props)
@@ -35,14 +34,14 @@ class SunriseSunset extends React.Component
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 				.then((response) => {
 					console.log(response.data)
-					let placename = response.data.location.name;
+					let placeName = response.data.location.name;
 					const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 					const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
 					const todayDate = response.data.forecast.forecastday[0].date;
 					const tomorrowDate = response.data.forecast.forecastday[1].date;
 					const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
 					const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
-					weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
+					weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placeName, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
 					this.setState({ weatherData: weatherData },() => {
 						this.convertTimeStamp();
 						this.sunriseSunsetInPaharDay(); });
@@ -145,7 +144,7 @@ class SunriseSunset extends React.Component
 		// ----------------11:59 pm timestamp for sending API request ---------------------------
 
 		let elevenFiftyNine = new Date();
-		elevenFiftyNine.setHours(11);
+		elevenFiftyNine.setHours(23);
 		elevenFiftyNine.setMinutes(59);
 		elevenFiftyNine.setSeconds(0);
 		let elevenFiftyNineStamp = elevenFiftyNine.getTime();
@@ -240,14 +239,14 @@ class SunriseSunset extends React.Component
 			axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 			.then((response) => {
 				console.log(response.data)
-				const placename = response.data.location.name;
+				const placeName = response.data.location.name;
 				const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 				const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
 				const todayDate = response.data.forecast.forecastday[0].date;
 				const tomorrowDate = response.data.forecast.forecastday[1].date;
 				const tomorrowSunriseTime = response.data.forecast.forecastday[1].astro.sunrise;
 				const tomorrowSunsetTime = response.data.forecast.forecastday[1].astro.sunset;
-				weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placename, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
+				weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: placeName, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
 				this.setState({ weatherData: weatherData })
 			})
 			.catch((error) => error);
@@ -300,36 +299,54 @@ class SunriseSunset extends React.Component
 			let unixdt = weatherData[1].prevDateStamp / 1000;
 			let latitude = weatherData[0].latitude;
 			let longitude = weatherData[0].longitude;
-			axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
-			.then((response) => {
-				console.log(response.data)
-				let prevSunset = response.data.forecast.forecastday[0].astro.sunset;
-				let preDate = response.data.forecast.forecastday[0].date;
-				let hr = parseInt(prevSunset.split(':')[0]) + 12;
-				let prevDate = new Date();
-				prevDate.setDate(preDate.split('-')[2]);
-				prevDate.setHours(hr);
-				prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
-				prevDate.setSeconds(0);
-				let prevStamp = prevDate.getTime();
-				weatherData[4] = { prevStamp: prevStamp };
-				this.setState({ weatherData: weatherData },() => {
-					let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
-					let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
-					let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
-					let sunsetPahar = this.convertToPaharNight(sunsetPaharDiff);
-					let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
-					let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
-					if ( weatherData[3] ) {
-						weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
-						this.setState({ weatherData: weatherData });
-					} else {
-						weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
-						this.setState({ weatherData: weatherData });
-					}
-				});
-			})
-			.catch((error) => error);
+			if (!weatherData[4]) {
+				axios.get(`https://api.apixu.com/v1/history.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&unixdt=${unixdt}`)
+				.then((response) => {
+					console.log(response.data)
+					let prevSunset = response.data.forecast.forecastday[0].astro.sunset;
+					let preDate = response.data.forecast.forecastday[0].date;
+					let hr = parseInt(prevSunset.split(':')[0]) + 12;
+					let prevDate = new Date();
+					prevDate.setDate(preDate.split('-')[2]);
+					prevDate.setHours(hr);
+					prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
+					prevDate.setSeconds(0);
+					let prevStamp = prevDate.getTime();
+					weatherData[4] = { prevStamp: prevStamp };
+					this.setState({ weatherData: weatherData },() => {
+						let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
+						let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
+						let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
+						let sunsetPahar = this.convertToPaharNight(sunsetPaharDiff);
+						let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
+						let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
+						if ( weatherData[3] ) {
+							weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
+							this.setState({ weatherData: weatherData });
+						} else {
+							weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
+							this.setState({ weatherData: weatherData });
+						}
+					});
+				})
+				.catch((error) => error);
+			}
+			else if (weatherData[4])
+			{
+				let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
+				let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
+				let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
+				let sunsetPahar = this.convertToPaharNight(sunsetPaharDiff);
+				let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
+				let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
+				if ( weatherData[3] ) {
+					weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
+					this.setState({ weatherData: weatherData });
+				} else {
+					weatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
+					this.setState({ weatherData: weatherData });
+				}
+			}
 		}
 	}
 	startTime() 
@@ -373,6 +390,7 @@ class SunriseSunset extends React.Component
 			{
 				return (
 					<div className = 'main-content-wrapper'>
+					<div></div>
 						<div id = 'main-div' className = 'sunrise-sunset-day-wrapper'>
 							<div className = 'about-link-wrapper' >
 								<Link className = 'link-wrapper' to="/about"> ABOUT </Link>
@@ -523,6 +541,15 @@ class SunriseSunset extends React.Component
 			{
 				return <center className = 'center'> <PaharLoading /> </center>;
 			}
+		}
+		else if (this.state.errorMsg) {
+			return (
+				<center className = 'center'>
+					<span>
+						{this.state.errorMsg}
+					</span>
+				</center>
+			);
 		}
 		else
 		{

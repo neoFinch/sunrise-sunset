@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from './About';
-
 import SunriseSunset from './SunriseSunset';
 
 class App extends React.Component
