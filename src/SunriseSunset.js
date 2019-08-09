@@ -33,6 +33,30 @@ class SunriseSunset extends React.Component
 				let longitude = position.coords.longitude;
 				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
 				.then((response) => {
+
+					window.OneSignal.getUserId(function(userId) {
+						if (userId) {
+							const body = { "lat": latitude, "lng": longitude, "userId": userId, notifications:[{ value: 20 }]}
+							if(process.env.NODE_ENV === 'development')
+							{
+								axios.post('http://localhost:8001/api/notification-token', body)
+								.then((response) => {
+									console.log(response)
+								})
+								.catch((error) => console.log(error));
+								console.log('local dev server')
+							}
+							else if(process.env.NODE_ENV === 'production')
+							{
+								axios.post('http://www.pahar.tk/api/notification-token', body)
+								.then((response) => {
+									console.log(response)
+								})
+								.catch((error) => console.log(error));
+								console.log('prod server');
+							}
+						}
+		      });
 					console.log(response.data)
 					let placeName = response.data.location.name;
 					const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
