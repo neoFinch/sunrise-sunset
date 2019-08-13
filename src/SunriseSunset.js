@@ -48,7 +48,7 @@ class SunriseSunset extends React.Component
 							}
 							else if(process.env.NODE_ENV === 'production')
 							{
-								axios.post('http://www.pahar.tk/api/notification-token', body)
+								axios.post('https://www.pahar.tk/api/notification-token', body)
 								.then((response) => {
 									console.log(response)
 								})
