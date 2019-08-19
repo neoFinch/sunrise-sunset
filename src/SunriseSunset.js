@@ -31,7 +31,7 @@ class SunriseSunset extends React.Component
 			navigator.geolocation.getCurrentPosition((position) => {
 				let latitude = position.coords.latitude;
 				let longitude = position.coords.longitude;
-				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=2`)
+				axios.get(`https://api.apixu.com/v1/forecast.json?key=4b4142a4fe3a4a3b81d104736191007&q=${latitude},${longitude}&days=3`)
 				.then((response) => {
 
 					window.OneSignal.getUserId(function(userId) {
