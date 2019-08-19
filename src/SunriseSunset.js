@@ -278,7 +278,7 @@ class SunriseSunset extends React.Component
 
 		//-----------sending sunrise-sunset time difference to be converted in pahar time for day time----------------
 
-		if ( weatherData[0].currentTimeStamp > weatherData[1].startStamp && weatherData[0].currentTimeStamp < weatherData[1].endStamp)
+		if ( (weatherData[0].currentTimeStamp > weatherData[1].startStamp) && (weatherData[0].currentTimeStamp < weatherData[1].endStamp) )
 		{
 			let sunrisePaharDiff = ( weatherData[0].currentTimeStamp - weatherData[1].startStamp ) / 1000;
 			let sunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
@@ -297,7 +297,7 @@ class SunriseSunset extends React.Component
 
 		//-----------sending sunset-midnight time difference to be converted in pahar time for night time----------------
 
-		else if ( weatherData[0].currentTimeStamp > weatherData[1].endStamp && weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp)
+		else if ( (weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp) )
 		{
 			let weatherData = this.state.weatherData;
 			let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[1].endStamp ) / 1000;
@@ -317,7 +317,7 @@ class SunriseSunset extends React.Component
 
 		//-----------sending midnight-sunrise time difference to be converted in pahar time for night time----------------
 
-		else if ( weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp && weatherData[0].currentTimeStamp < weatherData[1].startStamp)
+		else if ( (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp) )
 		{
 			let weatherData = this.state.weatherData;
 			let unixdt = weatherData[1].prevDateStamp / 1000;
@@ -335,6 +335,7 @@ class SunriseSunset extends React.Component
 					prevDate.setHours(hr);
 					prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
 					prevDate.setSeconds(0);
+					console.log(prevDate)
 					let prevStamp = prevDate.getTime();
 					weatherData[4] = { prevStamp: prevStamp };
 					this.setState({ weatherData: weatherData },() => {
