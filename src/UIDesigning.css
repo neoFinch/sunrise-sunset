@@ -351,3 +351,111 @@
 	}
 
 }
+
+@media only screen and (max-width: 350px) {
+	.location-wrapper{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-top: 70px;
+	}
+	.about-link-wrapper{
+		position: absolute;
+		top: 21px;
+		right: 21px;
+		font-family: BebasNeue-Book;
+		font-size: 20px;
+		line-height: 18px;
+		text-align: center;
+		letter-spacing: 0.9px;
+		color: #6D7278;
+	}
+	.home-link-wrapper{
+		position: absolute;
+		top: 21px;
+		right: 21px;
+		font-family: BebasNeue-Book;
+		font-size: 20px;
+		line-height: 18px;
+		text-align: center;
+		letter-spacing: 0.9px;
+		color: #6D7278;
+	}
+	.read-more-wrapper{
+		position: absolute;
+		font-family: BebasNeue-Book;
+		font-size: 20px;
+		line-height: 18px;
+		text-align: center;
+		letter-spacing: 0.9px;
+		color: #6D7278;
+		bottom: 21px;
+		left: 21px;
+	}
+	.daytime-container{
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		box-shadow: 0px 15px 15px -21px #FBAB7E;
+		border: 1px solid rgba(219, 219, 219, 0.5);
+		border-radius: 20px;
+		margin-top: 19px;
+		width: 286px;
+		height: 149px;
+	}
+	.nighttime-container{
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		box-shadow: 0px 15px 15px -21px #D299C2;
+		border: 1px solid rgba(219, 219, 219, 0.5);
+		border-radius: 20px;
+		margin-top: 19px;
+		width: 286px;
+		height: 149px;
+	}
+	.daytime-sunset-container{
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		box-shadow: 0px 15px 15px -21px #D299C2;
+		border: 1px solid rgba(219, 219, 219, 0.5);
+		border-radius: 20px;
+		margin-top: 19px;
+		width: 286px;
+		height: 149px;
+	}
+	.nighttime-sunrise-container{
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		box-shadow: 0px 15px 15px -21px white;
+		border: 1px solid rgba(219, 219, 219, 0.5);
+		border-radius: 20px;
+		margin-top: 19px;
+		width: 286px;
+		height: 149px;
+	}
+	.time-container{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-top: 14px;
+		padding-right: 7px;
+		width: 255px;
+		height: 48px;
+	}
+	.sunset-image-wrapper, .sunrise-image-wrapper{
+		display: flex;
+		flex-direction: column;
+		line-height: 1px;
+		justify-content: center;
+		align-items: center;
+		width: 24px;
+		height: 21px;
+		margin-left: 20px;
+		margin-top: 12px;
+	}
+}
