@@ -163,7 +163,9 @@
 	padding-top: 14px;
 	padding-right: 21px;
 	width: 255px;
+	-webkit-width: 255px;
 	height: 48px;
+	-webkit-height: 48px;
 }
 .pahar-text-wrapper, .garhi-text-wrapper, .pal-text-wrapper, .lamha-text-wrapper{
 	color: #9B9B9B;
@@ -172,6 +174,7 @@
 	font-weight: 500;
 	font-size: 12px;
 	line-height: 40px;
+	-webkit-line-height: 40px;
 	text-align: center;
 	letter-spacing: 0.6px;
 	width: 80px;
@@ -181,6 +184,7 @@
 	font-family: BebasNeue-Regular;
 	font-size: 48px;
 	line-height: 48px;
+	-webkit-line-height: 48px;
 	text-align: center;
 	letter-spacing: 2.4px;
 	width: 80px;
@@ -191,6 +195,7 @@
 	font-family: BebasNeue-Regular;
 	font-size: 48px;
 	line-height: 48px;
+	-webkit-line-height: 48px;
 	text-align: center;
 	width: 80px;
 	letter-spacing: 2.4px;
@@ -218,6 +223,7 @@
 	width: 24px;
 	height: 21px;
 	margin-left: 33px;
+	-webkit-margin-left: 33px;
 	margin-top: 12px;
 }
 .about-div-wrapper{
@@ -444,7 +450,9 @@
 		align-items: center;
 		padding-top: 14px;
 		padding-right: 7px;
+		-webkit-width: 255px;
 		width: 255px;
+		-webkit-height: 48px;
 		height: 48px;
 	}
 	.sunset-image-wrapper, .sunrise-image-wrapper{
@@ -456,6 +464,7 @@
 		width: 24px;
 		height: 21px;
 		margin-left: 20px;
+		-webkit-margin-left: 20px;
 		margin-top: 12px;
 	}
 }
