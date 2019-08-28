@@ -438,10 +438,10 @@ class SunriseSunset extends React.Component
 				let returnDiv = this.returningMainDiv;
 
 				if ( location ) {
-					renderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv });
+					return renderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv });
 				}
 				else {
-					renderSunsetData({ sunTime, nightTime, scrollDiv, returnDiv });
+					return renderSunsetData({ sunTime, nightTime, scrollDiv, returnDiv });
 				}
 			}		
 			else 
