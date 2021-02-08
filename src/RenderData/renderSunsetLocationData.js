@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import  '../hamburger.scss';
 import SunsetImageUpload from '../SunsetImageUpload';
 import SunriseImageUpload from '../SunriseImageUpload';
@@ -6,8 +6,35 @@ import { Link } from "react-router-dom";
 import '../UIDesigning.css';
 import '../App.css';
 import DownArrow from '../DownArrow';
+import Constants from '../constants';
 
-export function renderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv}) {
+
+export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude, fetchDataByPlaceName, getSunriseDataByLocation}) {
+
+  const [query, setQuery] = useState("");
+  const autoCompleteRef = useRef(null);
+  const [suggestions, setSuggestions] = useState([]);
+  let API_KEY = 'AIzaSyAsLC4glXRid8OUIU6FVcV5TwCGrZeDPHg';
+  
+  const searchByPlaceName = (e) => {
+    // if (e.key === 'Enter') {
+      // search by place name
+      console.log('search  : ', query);
+      if (query.length < 3) {
+        setSuggestions([]);
+        return
+      };
+      let url = Constants.BASE_URL + '/search/' + query;
+      fetch(url, {
+        method: 'GET',
+      }).then(res => res.json())
+      .then(res => {
+        console.log('res : ', res);
+        setSuggestions(res.places);
+      })
+    // }
+  }
+  
 	return (
 		<div className = 'main-content-wrapper'>
 			<div id = 'main-div'className = 'sunrise-sunset-night-wrapper' >
@@ -16,8 +43,49 @@ export function renderSunsetLocationData({ location, sunTime, nightTime, scrollD
 				</div>
 				<div className = 'location-wrapper'>
 					<div className = 'location-text-wrapper'>CURRENT TIME AT</div>
-					<div className = 'location-night'> { location } </div>
+					<div className = 'location-night'> 
+            { location } 
+            <span className='text-sm'>
+              {'(' + parseFloat(latitude).toFixed(4) + ', ' + parseFloat(longitude).toFixed(4) + ')'}
+            </span>
+          </div>
 				</div>
+        <div className='search-by-location-name-wrapper'>
+          <div className='search-by-location-name'>
+            <input 
+              ref={autoCompleteRef} 
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder='Type a location'
+              value={query}
+              onKeyUp={searchByPlaceName}
+            />
+            <button
+              onClick={getSunriseDataByLocation}
+              type='button'
+              className='location-btn'>
+              <img src={require('../assets/images/location.svg')}/>
+            </button>
+            {
+              suggestions.length ?
+              <div className='place-suggestion'>
+                {
+                  suggestions.map( suggest => 
+                    <div 
+                      key={suggest.id} 
+                      onClick={() => {
+                        fetchDataByPlaceName(suggest.coord.lat, suggest.coord.lon, suggest.name);
+                        setSuggestions([])
+                        setQuery('')
+                        }}>
+                      {suggest.name + '(' + suggest.country + ')'}
+                    </div> 
+                  )
+                }
+              </div>
+              : null
+            }
+            </div>
+        </div>
 				<center>
 					<div className = 'nighttime-container'>
 						<div className = 'nighttime-image-wrapper'>

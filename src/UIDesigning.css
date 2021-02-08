@@ -84,7 +84,8 @@
 	border-radius: 20px;
 	margin-top: 19px;
 	width: 327px;
-	height: 153px;
+  height: 153px;
+  align-items: center;
 }
 .nighttime-container{
 	display: flex;
@@ -95,7 +96,8 @@
 	border-radius: 20px;
 	margin-top: 19px;
 	width: 327px;
-	height: 153px;
+  height: 153px;
+  align-items: center;
 }
 .daytime-sunset-container{
 	display: flex;
@@ -106,7 +108,8 @@
 	border-radius: 20px;
 	margin-top: 19px;
 	width: 327px;
-	height: 153px;
+  height: 153px;
+  align-items: center;
 }
 .nighttime-sunrise-container{
 	display: flex;
@@ -117,7 +120,8 @@
 	border-radius: 20px;
 	margin-top: 19px;
 	width: 327px;
-	height: 153px;
+  height: 153px;
+  align-items: center;
 }
 .nighttime-text-container{
 	font-family: Montserrat-Medium;
@@ -161,7 +165,7 @@
 	justify-content: center;
 	align-items: center;
 	padding-top: 14px;
-	padding-right: 21px;
+	/* padding-right: 21px; */
 	width: 255px;
 	-webkit-width: 255px;
 	height: 48px;
@@ -223,8 +227,8 @@
 	align-items: center;
 	width: 24px;
 	height: 21px;
-	margin-left: 33px;
-	-webkit-margin-left: 33px;
+	/* margin-left: 33px; */
+	/* -webkit-margin-left: 33px; */
 	margin-top: 12px;
 }
 .about-div-wrapper{
@@ -632,4 +636,87 @@
 		-webkit-margin-left: 20px;
 		margin-top: 12px;
 	}
+}
+
+.search-by-location-name-wrapper {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+width: 50%;
+margin: 0 auto;
+/* border: 1px solid black; */
+position: relative;
+}
+
+.search-by-location-name {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  font-family: BebasNeue-Book;
+  position: relative;
+}
+
+.search-by-location-name > input {
+  border: 1px solid #efefef;
+  padding: 10px 15px;
+  outline: none;
+  font-size: 18px;
+  border-radius: 2px;
+  font-weight: 100;
+  font-family: Montserrat-Light;
+  flex-wrap: wrap;
+  width: 250px;
+}
+
+.search-by-location-name > input:focus {
+  box-shadow: 0px 2px 4px #eee;
+}
+
+.location-btn {
+  border: none;
+  padding: 0 20px;
+  background-color: #D56429;
+  border-radius: 2px;
+  outline: none;
+  overflow: hidden;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.location-btn:active {
+  background-color: #FBAB7E;
+}
+
+.error-mssg {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: rgb(223, 74, 74);
+  font-family: Montserrat-Light;
+}
+
+.text-sm {
+  font-size: 18px;
+}
+
+.place-suggestion {
+  /* border: 1px solid red; */
+  width: 280px;
+  position: absolute;
+  top: 55px;
+  left: 0;
+  max-height: 150px;
+  overflow-y: scroll;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px #eee;
+  font-family: Montserrat-Light;
+  cursor: pointer;
+}
+
+.place-suggestion>div{
+  padding: 10px;
+}
+
+.place-suggestion > div:hover {
+  background-color: #eee;
 }

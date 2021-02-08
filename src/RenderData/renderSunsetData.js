@@ -7,7 +7,7 @@ import '../UIDesigning.css';
 import '../App.css';
 import DownArrow from '../DownArrow';
 
-export function renderSunsetData({ sunTime, nightTime, scrollDiv, returnDiv }) {
+export function RenderSunsetData({ sunTime, nightTime, scrollDiv, returnDiv }) {
 	return (
 		<div className = 'main-content-wrapper'>
 			<div id = 'main-div'className = 'sunrise-sunset-night-wrapper' >
