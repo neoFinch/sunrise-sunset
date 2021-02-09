@@ -110,9 +110,9 @@ class SunriseSunset extends React.Component
       const sunriseTime = response.data.current.sunrise * 1000;
       const sunsetTime = response.data.current.sunset * 1000;
       const todayDate = response.data.current.dt * 1000;
-      const tomorrowDate = response.data.daily[0].dt * 1000;
-      const tomorrowSunriseTime = response.data.daily[0].sunrise * 1000;
-      const tomorrowSunsetTime = response.data.daily[0].sunset * 1000;
+      const tomorrowDate = response.data.daily[1].dt * 1000;
+      const tomorrowSunriseTime = response.data.daily[1].sunrise * 1000;
+      const tomorrowSunsetTime = response.data.daily[1].sunset * 1000;
       weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: this.state.placeName, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
 
       // let cities = CityList.default;
@@ -232,7 +232,8 @@ class SunriseSunset extends React.Component
 
 		let todayMidNight = new Date();
 		todayMidNight.setHours(0,0,0,0);
-		let todayMidNightStamp = todayMidNight.getTime();
+    let todayMidNightStamp = todayMidNight.getTime();
+    console.log('TODAY MIGNIGHT TIMESTAMP : ', todayMidNightStamp)
 
 		// -----------------------getting tomorrow's midnight timestamp----------------------------
 
@@ -260,7 +261,7 @@ class SunriseSunset extends React.Component
     // console.log('this.state.weatherData[1] : ', this.state.weatherData[1]);
 
 		let timeDiff = (this.state.weatherData[1].endStamp - this.state.weatherData[1].startStamp) / 1000;
-
+    console.log('TIME DIFF : ', timeDiff);
 		let onePahar = timeDiff / 4 / 60;
 		let oneGarhi = onePahar / 8;
 		let onePal = oneGarhi / 60;
