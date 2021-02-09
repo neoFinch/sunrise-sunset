@@ -41,40 +41,52 @@ class SunriseSunset extends React.Component
   }
   
   getSunriseDataByLocation = () => {
-    console.log('getSunriseDataByLocation called');
-    // console.log('Window ', window);
-    // console.log('google ', window.google);
-    // console.log('oneSignal ', window.OneSignal());
-    navigator.permissions.query({name:'geolocation'})
-    .then(result => {
-      
-      let tempState = {...this.state};
-      
-      if (result.state === 'granted') {
-        tempState.locationPermission = true;
-      }
-      if (result.state === 'denied' || result.state === 'prompt') {
-        tempState.locationPermission = false;
-        toast("Enable Location", {
-          position: toast.POSITION.TOP_CENTER
-        });
-      }
-      this.setState(tempState);
-      console.log('result : ', result);
-    });
+    if (navigator.permissions) {
+      navigator.permissions.query({name:'geolocation'})
+      .then(result => {
+
+        let tempState = {...this.state};
+        
+        if (result.state === 'granted') {
+          tempState.locationPermission = true;
+        }
+        if (result.state === 'denied' || result.state === 'prompt') {
+          tempState.locationPermission = false;
+          toast("Enable Location", {
+            position: toast.POSITION.TOP_CENTER
+          });
+        }
+        this.setState(tempState);
+        // console.log('result : ', result);
+      });
+    }
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position, err) => {
+      // console.log('iffffs');
+      let opt = {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 0
+      };
+      navigator.geolocation.getCurrentPosition((position) => {
         console.log('position : ', position);
-        console.log('err : ', err);
         let tempState = {...this.state};
         tempState.latitude = position.coords.latitude;
         tempState.longitude = position.coords.longitude;
         this.setState(tempState, () => { 
           this.fetchData();
         });
-      });
+      }, 
+      () => { 
+        console.log('ERR getting locationsss');
+        toast("You might need to enable location.", {
+          position: toast.POSITION.TOP_CENTER
+        });
+      }, opt);
     } else {
-      console.log('ELSEEEEEEE');
+      // console.log('ELSEEEEEEE');
+      toast("You might need to enable location.", {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   }
 
@@ -91,12 +103,14 @@ class SunriseSunset extends React.Component
   getPlaceNameFromCoord = (latt, longg) => {
     let url = Constants.BASE_URL + '/search/' + latt + '/' + longg;
     axios.get(url).then(data => {
-      console.log('getPlaceNameFromCoord : ', data);
-      console.log('asdasd : ', data.data.place.name);
+      // console.log('getPlaceNameFromCoord : ', data);
+      // console.log('asdasd : ', data.data.place.name);
       // return data.data.place.name;
       let tempState = {...this.state};
       tempState.placeName = data.data.place.name;
-      this.setState(tempState, () => {console.log(this.state);});
+      this.setState(tempState, () => {
+        // console.log(this.state);
+      });
     });
   }
 
@@ -106,7 +120,7 @@ class SunriseSunset extends React.Component
 
     axios.get(url)
     .then((response) => {
-      console.log('response : ', response);
+      // console.log('response : ', response);
       const sunriseTime = response.data.current.sunrise * 1000;
       const sunsetTime = response.data.current.sunset * 1000;
       const todayDate = response.data.current.dt * 1000;
@@ -140,15 +154,20 @@ class SunriseSunset extends React.Component
 	{
     let { latitude, longitude } = this.state;
     let weatherData = this.state.weatherData;
-    console.log('CALLED');
+    // console.log('CALLED');
     ( async () => {
-      let permissionState = await navigator.permissions.query({name:'geolocation'});
-      console.log('permission state : ', permissionState);
-      if (permissionState.state === 'denied') {
-        // call api with default location lat & long
-        this.fetchData();
+      if (navigator.permissions) {
+        let permissionState = await navigator.permissions.query({name:'geolocation'});
+        // console.log('permission state : ', permissionState);
+        if (permissionState.state === 'denied') {
+          // call api with default location lat & long
+          this.fetchData();
+        } else {
+          this.getSunriseDataByLocation();
+        }
       } else {
-        this.getSunriseDataByLocation();
+        // alert('FAILs');
+        this.fetchData();
       }
     })();
     
@@ -233,7 +252,7 @@ class SunriseSunset extends React.Component
 		let todayMidNight = new Date();
 		todayMidNight.setHours(0,0,0,0);
     let todayMidNightStamp = todayMidNight.getTime();
-    console.log('TODAY MIGNIGHT TIMESTAMP : ', todayMidNightStamp)
+    // console.log('TODAY MIGNIGHT TIMESTAMP : ', todayMidNightStamp)
 
 		// -----------------------getting tomorrow's midnight timestamp----------------------------
 
@@ -261,7 +280,7 @@ class SunriseSunset extends React.Component
     // console.log('this.state.weatherData[1] : ', this.state.weatherData[1]);
 
 		let timeDiff = (this.state.weatherData[1].endStamp - this.state.weatherData[1].startStamp) / 1000;
-    console.log('TIME DIFF : ', timeDiff);
+    // console.log('TIME DIFF : ', timeDiff);
 		let onePahar = timeDiff / 4 / 60;
 		let oneGarhi = onePahar / 8;
 		let onePal = oneGarhi / 60;
@@ -338,7 +357,7 @@ class SunriseSunset extends React.Component
 
 		if ( weatherData[0].currentTimeStamp === weatherData[1].elevenFiftyNineStamp)
 		{
-      console.log('One');
+      // console.log('One');
 			const latitude = weatherData[0].latitude;
       const longitude = weatherData[0].longitude;
       
@@ -346,7 +365,7 @@ class SunriseSunset extends React.Component
 
 			axios.get(url)
 			.then((response) => {
-				console.log(response.data)
+				// console.log(response.data)
 				const placeName = response.data.location.name;
 				const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 				const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
@@ -384,7 +403,7 @@ class SunriseSunset extends React.Component
 
 		else if ( (weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp) )
 		{
-      console.log('Three');
+      // console.log('Three');
 			let weatherData = this.state.weatherData;
 			let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[1].endStamp ) / 1000;
 			let sunrisePaharDiff = ( weatherData[1].tstartStamp - weatherData[0].currentTimeStamp ) / 1000;
@@ -405,12 +424,12 @@ class SunriseSunset extends React.Component
 
 		else if ( (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp) )
 		{
-      console.log('Four');
+      // console.log('Four');
 			let weatherData = this.state.weatherData;
 			let unixdt = weatherData[1].prevDateStamp / 1000;
 			let latt = weatherData[0].latitude;
       let longg = weatherData[0].longitude;
-      console.log('STATE : ', this.state.weatherData);
+      // console.log('STATE : ', this.state.weatherData);
 			if (!weatherData[4] && this.state.calledOnce === false) {
         let url = `${Constants.OPEN_WEATHER_API}/data/2.5/onecall?lat=${latt}&lon=${longg}&appid=${Constants.OPEN_WEATHER_API_KEY}&exclude=hourly,minutely`;
 				axios.get(url)
@@ -418,7 +437,7 @@ class SunriseSunset extends React.Component
           let tempState = {...this.state};
           tempState.calledOnce = true;
           this.setState(tempState)
-					console.log('sunset response : ', response.data)
+					// console.log('sunset response : ', response.data)
 					let prevSunset = response.data.current.sunset * 1000;
 					let preDate = response.data.daily[0].dt * 1000;
 					let hr = parseInt(prevSunset.split(':')[0]) + 12;
@@ -427,10 +446,10 @@ class SunriseSunset extends React.Component
 					prevDate.setHours(hr);
 					prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
 					prevDate.setSeconds(0);
-					console.log(prevDate)
+					// console.log(prevDate)
 					let prevStamp = prevDate.getTime();
           weatherData[4] = { prevStamp: prevStamp };
-          console.log('weather data : ', weatherData);
+          // console.log('weather data : ', weatherData);
             // this.setState({ weatherData: weatherData },
               // () => {
               // let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
@@ -454,7 +473,7 @@ class SunriseSunset extends React.Component
 			}
 			else if (weatherData[4])
 			{
-        console.log('Five');
+        // console.log('Five');
 				let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
 				let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
 				let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
@@ -466,7 +485,7 @@ class SunriseSunset extends React.Component
 					tempWeatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
 					this.setState({ weatherData: weatherData });
 				} else {
-          console.log('BADA ELSE');
+          // console.log('BADA ELSE');
 					tempWeatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
 					this.setState({ weatherData: weatherData });
 				}

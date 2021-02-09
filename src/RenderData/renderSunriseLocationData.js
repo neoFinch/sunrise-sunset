@@ -9,26 +9,26 @@ import DownArrow from '../DownArrow';
 import { ToastContainer } from 'react-toastify';
 import Constants from '../constants';
 
-let autoComplete;
+// let autoComplete;
 
-  const loadScript = (url, callback) => {
-    let script = document.createElement("script");
-    script.type = "text/javascript";
+  // const loadScript = (url, callback) => {
+  //   let script = document.createElement("script");
+  //   script.type = "text/javascript";
   
-    if (script.readyState) {
-      script.onreadystatechange = function() {
-        if (script.readyState === "loaded" || script.readyState === "complete") {
-          script.onreadystatechange = null;
-          callback();
-        }
-      };
-    } else {
-      script.onload = () => callback();
-    }
+  //   if (script.readyState) {
+  //     script.onreadystatechange = function() {
+  //       if (script.readyState === "loaded" || script.readyState === "complete") {
+  //         script.onreadystatechange = null;
+  //         callback();
+  //       }
+  //     };
+  //   } else {
+  //     script.onload = () => callback();
+  //   }
   
-    script.src = url;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  };
+  //   script.src = url;
+  //   document.getElementsByTagName("head")[0].appendChild(script);
+  // };
 
   let geocoder;
 function handleScriptLoad(updateQuery, autoCompleteRef) {
@@ -69,23 +69,23 @@ export default function RenderSunriseLocationData({ location, sunTime, nightTime
   const [query, setQuery] = useState("");
   const autoCompleteRef = useRef(null);
   const [suggestions, setSuggestions] = useState([]);
-  let API_KEY = 'AIzaSyAsLC4glXRid8OUIU6FVcV5TwCGrZeDPHg';
-  useEffect(() => {
-    loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`,
-      () => handleScriptLoad(setQuery, autoCompleteRef)
-    );
-  }, [])
+  // let API_KEY = 'AIzaSyAsLC4glXRid8OUIU6FVcV5TwCGrZeDPHg';
+  // useEffect(() => {
+  //   loadScript(
+  //     `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`,
+  //     () => handleScriptLoad(setQuery, autoCompleteRef)
+  //   );
+  // }, [])
 
   useEffect(() => {
-    console.log('QUERY : ', query);
+    // console.log('QUERY : ', query);
     // handlePlaceSelect(query)
   }, [query])
 
   const searchByPlaceName = (e) => {
     // if (e.key === 'Enter') {
       // search by place name
-      console.log('search  : ', query);
+      // console.log('search  : ', query);
       if (query.length < 3) {
         setSuggestions([]);
         return
@@ -95,7 +95,7 @@ export default function RenderSunriseLocationData({ location, sunTime, nightTime
         method: 'GET',
       }).then(res => res.json())
       .then(res => {
-        console.log('res : ', res);
+        // console.log('res : ', res);
         setSuggestions(res.places);
       })
     // }
@@ -119,7 +119,7 @@ export default function RenderSunriseLocationData({ location, sunTime, nightTime
         <div className='search-by-location-name-wrapper'>
           <div className='search-by-location-name'>
             <input 
-              ref={autoCompleteRef} 
+              ref={autoCompleteRef}
               onChange={(e) => setQuery(e.target.value)}
               placeholder='Type a location'
               value={query}

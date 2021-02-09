@@ -7,6 +7,7 @@ import '../UIDesigning.css';
 import '../App.css';
 import DownArrow from '../DownArrow';
 import Constants from '../constants';
+import { ToastContainer } from 'react-toastify';
 
 
 export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude, fetchDataByPlaceName, getSunriseDataByLocation}) {
@@ -14,12 +15,12 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
   const [query, setQuery] = useState("");
   const autoCompleteRef = useRef(null);
   const [suggestions, setSuggestions] = useState([]);
-  let API_KEY = 'AIzaSyAsLC4glXRid8OUIU6FVcV5TwCGrZeDPHg';
+  // let API_KEY = 'AIzaSyAsLC4glXRid8OUIU6FVcV5TwCGrZeDPHg';
   
   const searchByPlaceName = (e) => {
     // if (e.key === 'Enter') {
       // search by place name
-      console.log('search  : ', query);
+      // console.log('search  : ', query);
       if (query.length < 3) {
         setSuggestions([]);
         return
@@ -29,7 +30,7 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
         method: 'GET',
       }).then(res => res.json())
       .then(res => {
-        console.log('res : ', res);
+        // console.log('res : ', res);
         setSuggestions(res.places);
       })
     // }
@@ -145,6 +146,17 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
 					<span className = 'link-wrapper'>GO UP</span>
 				</div>	
 			</div>
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover 
+      />
 		</div>
 	)
 }
