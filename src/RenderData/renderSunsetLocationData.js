@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import  '../hamburger.scss';
 import SunsetImageUpload from '../SunsetImageUpload';
 import SunriseImageUpload from '../SunriseImageUpload';
@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 
 export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude, fetchDataByPlaceName, getSunriseDataByLocation}) {
 
+  // console.log('RenderSunsetLocationData', JSON.stringify(nightTime))
   const [query, setQuery] = useState("");
   const autoCompleteRef = useRef(null);
   const [suggestions, setSuggestions] = useState([]);
@@ -35,6 +36,10 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
       })
     // }
   }
+
+  // useEffect(() => {
+  //   // console.log('--------- value changes -------');
+  // }, [nightTime])
   
 	return (
 		<div className = 'main-content-wrapper'>
@@ -94,6 +99,7 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
 							<span className = 'nighttime-text-container'>Night-time</span>
 						</div>
 						<div className = 'time-container'>
+                {/* {JSON.stringify(nightTime)} */}
 								{ nightTime }
 								<span className = 'time-text-wrapper'>
 									<span className = 'pahar-text-wrapper'>PAHAR</span>
