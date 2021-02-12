@@ -16,6 +16,7 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
   const [query, setQuery] = useState("");
   const autoCompleteRef = useRef(null);
   const [suggestions, setSuggestions] = useState([]);
+  const [nightLamha, setNightLamha] = useState(nightTime.convertToLamha);
   // let API_KEY = 'AIzaSyAsLC4glXRid8OUIU6FVcV5TwCGrZeDPHg';
   
   const searchByPlaceName = (e) => {
@@ -39,10 +40,13 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
 
   // useEffect(() => {
   //   // console.log('--------- value changes -------');
+  //   // console.log(JSON.stringify(sunTime));
+  //   // console.log({nightTime});
   // }, [nightTime])
   
 	return (
 		<div className = 'main-content-wrapper'>
+
 			<div id = 'main-div'className = 'sunrise-sunset-night-wrapper' >
 				<div className = 'about-link-wrapper' >
 					<Link className = 'link-wrapper' to="/about"> ABOUT </Link>
@@ -99,7 +103,6 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
 							<span className = 'nighttime-text-container'>Night-time</span>
 						</div>
 						<div className = 'time-container'>
-                {/* {JSON.stringify(nightTime)} */}
 								{ nightTime }
 								<span className = 'time-text-wrapper'>
 									<span className = 'pahar-text-wrapper'>PAHAR</span>

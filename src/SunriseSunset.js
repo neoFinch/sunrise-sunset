@@ -322,12 +322,13 @@ class SunriseSunset extends React.Component
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
       //let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
       // console.log('convertToLamha : ', convertToLamha);
-			return (
+      console.log('convertToPaharNight if : ', convertToPahar, convertToGarhi, convertToPal, convertToLamha);
+			return ( 
 				<span className='time-values-wrapper'>
-					<span className='pahar-time-wrapper'>{`${convertToPahar}`}</span>
-					<span className='garhi-time-wrapper'>{ `${convertToGarhi}`}</span>
-					<span className='pal-time-wrapper'>{ `${convertToPal}`}</span>
-					<span className='lamha-time-wrapper'>{`${convertToLamha}`} </span>
+					<span className='pahar-time-wrapper' key={convertToPahar}>{`${convertToPahar}`}</span>
+					<span className='garhi-time-wrapper' key={convertToGarhi}>{ `${convertToGarhi}`}</span>
+					<span className='pal-time-wrapper' key={convertToPal}>{ `${convertToPal}`}</span>
+					<span className='lamha-time-wrapper' key={convertToLamha}>{`${convertToLamha}`} </span>
 				</span>
 			);
 		}
@@ -344,12 +345,13 @@ class SunriseSunset extends React.Component
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
       //let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
       // console.log('COnvet to lamha  : ', convertToLamha);
+      // console.log('convertToPaharNight else if : ', convertToPahar, convertToGarhi, convertToPal, convertToLamha);
 			return (
 				<span className='time-values-wrapper'>
-					<span className='pahar-time-wrapper'>{`${convertToPahar}`}</span>
-					<span className='garhi-time-wrapper'>{ `${convertToGarhi}`}</span>
-					<span className='pal-time-wrapper'>{ `${convertToPal}`}</span>
-					<span className='lamha-time-wrapper'>{`${convertToLamha}`} </span>
+					<span className='pahar-time-wrapper' key={convertToPahar}>{`${convertToPahar}`}</span>
+					<span className='garhi-time-wrapper' key={convertToGarhi}>{ `${convertToGarhi}`}</span>
+					<span className='pal-time-wrapper' key={convertToPal}>{ `${convertToPal}`}</span>
+					<span className='lamha-time-wrapper' key={convertToLamha}>{`${convertToLamha}`} </span>
 				</span>
 			);
 		}
@@ -441,37 +443,58 @@ class SunriseSunset extends React.Component
         // debugger;
         // console.log('midnight ');
         // this.fetchData();
-        let url = `${Constants.OPEN_WEATHER_API}/data/2.5/onecall?lat=${latt}&lon=${longg}&appid=${Constants.OPEN_WEATHER_API_KEY}&exclude=hourly,minutely`;
+
+        const today = new Date()
+        let yesterday = new Date(today)
+        yesterday.setDate(yesterday.getDate() - 1)
+        yesterday = parseInt(yesterday.getTime()/1000);
+        // console.log('yesterday : ', yesterday);
+        // let url = `${Constants.OPEN_WEATHER_API}/data/2.5/onecall?lat=${latt}&lon=${longg}&appid=${Constants.OPEN_WEATHER_API_KEY}&exclude=hourly,minutely`;
+        let url = `${Constants.OPEN_WEATHER_API}/data/2.5/onecall/timemachine?lat=${latt}&lon=${longg}&appid=${Constants.OPEN_WEATHER_API_KEY}&dt=${yesterday}`;
+        // console.log('url : ',url);
+
 				axios.get(url)
 				.then((response) => { 
-          // console.log('RESPONSE :smiley: ', response);
+          console.log('RESPONSE :smiley: ', response);
           let {calledOnce} = this.state;
+          // debugger;
           // console.log('tempState :', tempState);
           calledOnce = true;    
-         // this.setState({calledOnce}, () => {console.log('WOOOOOOOW : ', this.state);})
+          // this.setState({calledOnce}, () => {console.log('WOOOOOOOW : ', this.state);})
 					// console.log('sunset response : ', response.data)
 					let prevSunset = response.data.current.sunset * 1000;
-					let preDate = response.data.daily[0].dt * 1000;
-        //	let hr = parseInt(prevSunset.split(':')[0]) + 12;
-        let hr=new Date(prevSunset).getHours()+12;
+					let preDate = response.data.current.dt * 1000;
+          //let hr = parseInt(prevSunset.split(':')[0]) + 12;
+          let hr = new Date(prevSunset).getHours()+12;
+          // console.log('hr : ', hr);
+          // console.log('prevSunset : ', new Date(prevSunset).toISOString());
+          // console.log('prevSunset datestring: ', new Date(prevSunset).toDateString());
 					let prevDate = new Date();
-         // prevDate.setDate(preDate.split('-')[2]);
+          // prevDate.setDate(preDate.split('-')[2]);
           prevDate.setDate(new Date(preDate).getDate());
 
 					prevDate.setHours(hr);
-       //   prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
+          //prevDate.setMinutes(prevSunset.split(' ')[0].split(':')[1]);
           prevDate.setMinutes(new Date(prevSunset).getMinutes());
 
 					prevDate.setSeconds(0);
-					// console.log(prevDate)
+					// console.log('prevDate : ', prevDate.toISOString());
+					// console.log('prevDate date string: ', prevDate.toDateString());
           let prevStamp = prevDate.getTime();
           weatherData[4] = { prevStamp: prevStamp };
           // console.log('weather data : ', weatherData);
+          
             this.setState({calledOnce, weatherData: weatherData },
               () => {
+                // console.log('current time stamp : ', new Date(weatherData[0].currentTimeStamp).toISOString());
               let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
               let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
               let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
+
+              // console.log('sunsetPaharDiff : ', sunsetPaharDiff);
+              // console.log('sunrisePaharDiff : ', sunrisePaharDiff);
+              // console.log('nextSunsetPaharDiff : ', nextSunsetPaharDiff);
+
               let sunsetPahar = this.convertToPaharNight(sunsetPaharDiff);
               let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
               let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
@@ -490,7 +513,7 @@ class SunriseSunset extends React.Component
 			}
 			else if (weatherData[4])
 			{
-        // console.log('Five');
+        console.log('Five');
 				let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
 				let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
 				let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
@@ -498,15 +521,16 @@ class SunriseSunset extends React.Component
 				let sunrisePahar = this.convertToPaharNight(sunrisePaharDiff);
         let nextSunsetPahar = this.convertToPaharNight(nextSunsetPaharDiff);
         let tempWeatherData = [...this.state.weatherData];
+        // console.log('--- BHAI --- ', sunrisePahar, sunsetPahar, nextSunsetPahar);
 				if ( weatherData[3] ) {
           // console.log('five if');
 					tempWeatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
-					this.setState({ weatherData: weatherData });
+					this.setState({ weatherData: tempWeatherData });
 				} else {
           // console.log('BADA ELSE');
           // console.log('five else');
 					tempWeatherData[3] = { sunrisePahar: sunrisePahar , sunsetPahar: sunsetPahar, nextSunsetPahar: nextSunsetPahar };
-					this.setState({ weatherData: weatherData });
+					this.setState({ weatherData: tempWeatherData });
 				}
 			}
 		}
@@ -585,7 +609,7 @@ class SunriseSunset extends React.Component
 				let nightTime = weatherData[3].sunsetPahar;
 				let scrollDiv = this.scrollInfoDiv;
 				let returnDiv = this.returningMainDiv;
-
+        // console.log(nightTime.convertToLamha);
 				if ( location ) {
           return <RenderSunsetLocationData 
             fetchDataByPlaceName={this.fetchDataByPlaceName}

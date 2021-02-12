@@ -8,6 +8,8 @@ import '../App.css';
 import DownArrow from '../DownArrow';
 
 export function RenderSunsetData({ sunTime, nightTime, scrollDiv, returnDiv }) {
+  console.log('Render sunset data');
+  // alert(2)
 	return (
 		<div className = 'main-content-wrapper'>
 			<div id = 'main-div'className = 'sunrise-sunset-night-wrapper' >
