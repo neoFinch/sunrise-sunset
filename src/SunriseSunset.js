@@ -104,7 +104,7 @@ class SunriseSunset extends React.Component
   getPlaceNameFromCoord = (latt, longg) => {
     let url = Constants.BASE_URL + '/search/' + latt + '/' + longg;
     axios.get(url).then(data => {
-      console.log('getPlaceNameFromCoord : ', data);
+      // console.log('getPlaceNameFromCoord : ', data);
       // console.log('asdasd : ', data.data.place.name);
       // return data.data.place.name;
       let tempState = {...this.state};
@@ -155,8 +155,8 @@ class SunriseSunset extends React.Component
 
 	componentDidMount()
 	{
-    console.log('Window : ', window);
-    console.log('Window : ', window.gtag);
+    // console.log('Window : ', window);
+    // console.log('Window : ', window.gtag);
     let { latitude, longitude } = this.state;
     let weatherData = this.state.weatherData;
     // console.log('CALLED');
@@ -325,7 +325,7 @@ class SunriseSunset extends React.Component
 			let convertToLamha = Math.round((((( timePahar / 60 ) % onePahar ) % oneGarhi ) % onePal) / oneLamha);
       //let paharTime = `\u00A0\u00A0\u00A0${convertToPahar} \u00A0\u00A0\u00A0 | \u00A0\u00A0\u00A0\u00A0 ${convertToGarhi} \u00A0\u00A0\u00A0 | \u00A0  ${convertToPal} | \u00A0\u00A0\u00A0  ${convertToLamha}`;
       // console.log('convertToLamha : ', convertToLamha);
-      console.log('convertToPaharNight if : ', convertToPahar, convertToGarhi, convertToPal, convertToLamha);
+      // console.log('convertToPaharNight if : ', convertToPahar, convertToGarhi, convertToPal, convertToLamha);
 			return ( 
 				<span className='time-values-wrapper'>
 					<span className='pahar-time-wrapper' key={convertToPahar}>{`${convertToPahar}`}</span>
@@ -415,7 +415,7 @@ class SunriseSunset extends React.Component
 
 		else if ( (weatherData[0].currentTimeStamp > weatherData[1].endStamp) && (weatherData[0].currentTimeStamp < weatherData[1].tomorrowMidNightStamp) )
 		{
-      console.log('Three');
+      // console.log('Three');
 			let weatherData = this.state.weatherData;
 			let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[1].endStamp ) / 1000;
 			let sunrisePaharDiff = ( weatherData[1].tstartStamp - weatherData[0].currentTimeStamp ) / 1000;
@@ -436,7 +436,7 @@ class SunriseSunset extends React.Component
 
 		else if ( (weatherData[0].currentTimeStamp > weatherData[1].todayMidNightStamp) && (weatherData[0].currentTimeStamp < weatherData[1].startStamp) )
 		{
-      console.log('Four');
+      // console.log('Four');
 			let weatherData = this.state.weatherData;
 			let unixdt = weatherData[1].prevDateStamp / 1000;
 			let latt = weatherData[0].latitude;
@@ -458,7 +458,7 @@ class SunriseSunset extends React.Component
 
 				axios.get(url)
 				.then((response) => { 
-          console.log('RESPONSE :smiley: ', response);
+          // console.log('RESPONSE :smiley: ', response);
           let {calledOnce} = this.state;
           // debugger;
           // console.log('tempState :', tempState);
@@ -516,7 +516,7 @@ class SunriseSunset extends React.Component
 			}
 			else if (weatherData[4])
 			{
-        console.log('Five');
+        // console.log('Five');
 				let sunsetPaharDiff = ( weatherData[0].currentTimeStamp - weatherData[4].prevStamp ) / 1000;
 				let sunrisePaharDiff = ( weatherData[1].startStamp - weatherData[0].currentTimeStamp ) / 1000;
 				let nextSunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
