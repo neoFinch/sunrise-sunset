@@ -91,6 +91,7 @@ class SunriseSunset extends React.Component
   }
 
   fetchDataByPlaceName = (lat, long, placeName) => {
+    window.gtag('search-field', placeName);
     let tempState = {...this.state};
     tempState.latitude = lat;
     tempState.longitude = long;
@@ -154,6 +155,8 @@ class SunriseSunset extends React.Component
 
 	componentDidMount()
 	{
+    console.log('Window : ', window);
+    console.log('Window : ', window.gtag);
     let { latitude, longitude } = this.state;
     let weatherData = this.state.weatherData;
     // console.log('CALLED');
@@ -392,7 +395,7 @@ class SunriseSunset extends React.Component
 
 		if ( (weatherData[0].currentTimeStamp > weatherData[1].startStamp) && (weatherData[0].currentTimeStamp < weatherData[1].endStamp) )
 		{
-      console.log('Two');
+      // console.log('Two');
 			let sunrisePaharDiff = ( weatherData[0].currentTimeStamp - weatherData[1].startStamp ) / 1000;
 			let sunsetPaharDiff = ( weatherData[1].endStamp - weatherData[0].currentTimeStamp ) / 1000;
 			let nextSunrisePaharDiff = ( weatherData[1].tstartStamp - weatherData[0].currentTimeStamp ) / 1000;
