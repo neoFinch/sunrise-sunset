@@ -28,6 +28,8 @@ class SunriseSunset extends React.Component
       latitude: '26.8467',
       longitude: '80.9462',
       placeName: 'Lucknow',
+      state: '',
+      country: '',
       locationPermission: false,
       calledOnce: false
     };
@@ -52,9 +54,9 @@ class SunriseSunset extends React.Component
         }
         if (result.state === 'denied' || result.state === 'prompt') {
           tempState.locationPermission = false;
-          toast("Enable Location", {
-            position: toast.POSITION.TOP_CENTER
-          });
+          // toast("Enable Location", {
+          //   position: toast.POSITION.TOP_CENTER
+          // });
         }
         this.setState(tempState);
         // console.log('result : ', result);
@@ -77,7 +79,8 @@ class SunriseSunset extends React.Component
         });
       }, 
       () => { 
-        console.log('ERR getting locationsss');
+        console.log('ERR getting location');
+        this.fetchData();
         toast("You might need to enable location.", {
           position: toast.POSITION.TOP_CENTER
         });
@@ -101,15 +104,20 @@ class SunriseSunset extends React.Component
     });
   }
 
-  getPlaceNameFromCoord = (latt, longg) => {
+  getStateAndCountryFromCoord = (latt, longg) => {
     let url = Constants.BASE_URL + '/search/' + latt + '/' + longg;
     axios.get(url).then(data => {
-      // console.log('getPlaceNameFromCoord : ', data);
-      // console.log('asdasd : ', data.data.place.name);
+      // console.log('getStateAndCountryFromCoord : ', data);
+      // console.log('asdasd : ', data.data.place);
       // return data.data.place.name;
       let tempState = {...this.state};
       if (data.data.place !== undefined) {
-        tempState.placeName = data.data.place.name;
+        // tempState.placeName = data.data.place.name;
+        tempState.state = data.data.place.state;
+        tempState.country = data.data.place.country;
+      } else {
+        tempState.state = '';
+        tempState.country = '';
       }
       this.setState(tempState, () => {
         // console.log(this.state);
@@ -117,6 +125,27 @@ class SunriseSunset extends React.Component
     });
   }
 
+  getPlaceNameFromCoord = (latt, longg) => {
+    let url = Constants.BASE_URL + '/search/' + latt + '/' + longg;
+    axios.get(url).then(data => {
+      // console.log('getPlaceNameFromCoord : ', data);
+      // console.log('asdasd : ', data.data.place);
+      // return data.data.place.name;
+      let tempState = {...this.state};
+      if (data.data.place !== undefined) {
+        tempState.placeName = data.data.place.name;
+        tempState.state = data.data.place.state;
+        tempState.country = data.data.place.country;
+      } else {
+        tempState.state = '';
+        tempState.country = '';
+      }
+      this.setState(tempState, () => {
+        // console.log(this.state);
+      });
+    });
+  }
+  
   fetchData = (fetchByName = false) => {
     let { latitude, longitude, weatherData, placeName } = this.state;
     let url = `${Constants.OPEN_WEATHER_API}/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${Constants.OPEN_WEATHER_API_KEY}&exclude=hourly,minutely`;
@@ -132,16 +161,6 @@ class SunriseSunset extends React.Component
       const tomorrowSunsetTime = response.data.daily[1].sunset * 1000;
       weatherData[0] = { latitude: latitude, longitude: longitude, currentTimeStamp: (new Date()).getTime(), tomorrowDate: tomorrowDate, sunrise: sunriseTime, todayDate: todayDate, place: this.state.placeName, sunset: sunsetTime, tomorrowSunriseTime: tomorrowSunriseTime, tomorrowSunsetTime: tomorrowSunsetTime };
 
-      // let cities = CityList.default;
-      //   cities.map(city => {
-      //     if (
-      //       parseFloat(city.coord.lat).toString().substring(0,4) === parseFloat(this.state.latitude).toString().substring(0,4) 
-      //       && parseFloat(city.coord.lon).toString().substring(0,4) === parseFloat(this.state.longitude).toString().substring(0,4)
-      //     ) {
-      //       // if (fetchByName) {
-      //         weatherData[0].place = city.name;
-      //       // }
-      //     } });
       if (!fetchByName) {
         this.getPlaceNameFromCoord(latitude, longitude);
       }
@@ -327,7 +346,7 @@ class SunriseSunset extends React.Component
       // console.log('convertToLamha : ', convertToLamha);
       // console.log('convertToPaharNight if : ', convertToPahar, convertToGarhi, convertToPal, convertToLamha);
 			return ( 
-				<span className='time-values-wrapper'>
+				<span className='time-values-wrapper' key={Date.now()}>
 					<span className='pahar-time-wrapper' key={convertToPahar}>{`${convertToPahar}`}</span>
 					<span className='garhi-time-wrapper' key={convertToGarhi}>{ `${convertToGarhi}`}</span>
 					<span className='pal-time-wrapper' key={convertToPal}>{ `${convertToPal}`}</span>
@@ -350,7 +369,7 @@ class SunriseSunset extends React.Component
       // console.log('COnvet to lamha  : ', convertToLamha);
       // console.log('convertToPaharNight else if : ', convertToPahar, convertToGarhi, convertToPal, convertToLamha);
 			return (
-				<span className='time-values-wrapper'>
+				<span className='time-values-wrapper' key={Date.now()}>
 					<span className='pahar-time-wrapper' key={convertToPahar}>{`${convertToPahar}`}</span>
 					<span className='garhi-time-wrapper' key={convertToGarhi}>{ `${convertToGarhi}`}</span>
 					<span className='pal-time-wrapper' key={convertToPal}>{ `${convertToPal}`}</span>
@@ -377,7 +396,7 @@ class SunriseSunset extends React.Component
 
 			axios.get(url)
 			.then((response) => {
-				// console.log(response.data)
+				// console.log('one day : ', response.data)
 				const placeName = response.data.location.name;
 				const sunriseTime = response.data.forecast.forecastday[0].astro.sunrise;
 				const sunsetTime = response.data.forecast.forecastday[0].astro.sunset;
@@ -563,7 +582,11 @@ class SunriseSunset extends React.Component
           })
 				this.sunriseSunsetInPaharDay();
 			} catch (e) {}
-		}
+    }
+    if (prevState.latitude !== this.state.latitude || prevState.longitude !== this.state.longitude) {
+      // console.log('----PLACE NAME CHANGED -----');
+      this.getStateAndCountryFromCoord(this.state.latitude, this.state.longitude);
+    }
 	}
 
 	componentWillUnmount() {
@@ -573,7 +596,8 @@ class SunriseSunset extends React.Component
 
 	render()
 	{
-		const { weatherData } = this.state;
+    const { weatherData } = this.state;
+    // console.log('weatherData : ', weatherData);
 		if ( weatherData[0] && weatherData[1] )
 		{
 			//-----------------------------code for day time-------------------------------------
@@ -591,6 +615,8 @@ class SunriseSunset extends React.Component
            return <RenderSunriseLocationData
             fetchDataByPlaceName={this.fetchDataByPlaceName}
             location={this.state.placeName}
+            state={this.state.state}
+            country={this.state.country}
             sunTime={sunTime} 
             nightTime={nightTime}
             scrollDiv={scrollDiv}
@@ -617,6 +643,8 @@ class SunriseSunset extends React.Component
           return <RenderSunsetLocationData 
             fetchDataByPlaceName={this.fetchDataByPlaceName}
             location={this.state.placeName}
+            state={this.state.state}
+            country={this.state.country}
             sunTime={sunTime} 
             nightTime={nightTime}
             scrollDiv={scrollDiv}

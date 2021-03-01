@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import Constants from '../constants';
 
 
-export default function RenderSunriseLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude,getSunriseDataByLocation, fetchDataByPlaceName }) {
+export default function RenderSunriseLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude,getSunriseDataByLocation, fetchDataByPlaceName, state, country }) {
 
   const [query, setQuery] = useState("");
   const autoCompleteRef = useRef(null);
@@ -54,7 +54,19 @@ export default function RenderSunriseLocationData({ location, sunTime, nightTime
 					<div className = 'location-day'> 
             { location }
             <span className='text-sm'>
-              {'(' + parseFloat(latitude).toFixed(4) + ', ' + parseFloat(longitude).toFixed(4) + ')'}</span>
+              {'(' + parseFloat(latitude).toFixed(4) + ', ' + parseFloat(longitude).toFixed(4) + ')'}
+            </span>
+            <div style={{fontSize: '14px', lineHeight: '14px', color: '#282828', textAlign: 'left'}}>
+              <span style={{marginRight: '10px'}}>
+              {
+                state !== '' && 'State: ' + state
+              }
+              </span>
+              <span>
+                {
+                  country !== '' && 'Country:  ' + country
+                }</span>
+            </div>
           </div>
 				</div>
         <div className='search-by-location-name-wrapper'>

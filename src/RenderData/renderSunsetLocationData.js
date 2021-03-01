@@ -10,7 +10,7 @@ import Constants from '../constants';
 import { ToastContainer } from 'react-toastify';
 
 
-export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude, fetchDataByPlaceName, getSunriseDataByLocation}) {
+export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollDiv, returnDiv, latitude, longitude, fetchDataByPlaceName, getSunriseDataByLocation, state, country}) {
 
   // console.log('RenderSunsetLocationData', JSON.stringify(nightTime))
   const [query, setQuery] = useState("");
@@ -58,6 +58,17 @@ export function RenderSunsetLocationData({ location, sunTime, nightTime, scrollD
             <span className='text-sm'>
               {'(' + parseFloat(latitude).toFixed(4) + ', ' + parseFloat(longitude).toFixed(4) + ')'}
             </span>
+            <div style={{fontSize: '14px', lineHeight: '14px', color: '#ccc', textAlign: 'left'}}>
+              <span style={{marginRight: '10px'}}>
+              {
+                state !== '' && 'State: ' + state
+              }
+              </span>
+              <span>
+                {
+                  country !== '' && 'Country:  ' + country
+                }</span>
+            </div>
           </div>
 				</div>
         <div className='search-by-location-name-wrapper'>
